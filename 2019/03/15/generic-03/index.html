@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="generic,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这些局限性主要与Java的实现机制有关，Java中，泛型是通过类型擦除来实现的，类型参数在编译时会被替换为Object，运行时Java虚拟机不知道泛型这回事，这带来了很多局限性，其中有的部分是比较容易理解的，有的则是非常违反直觉的。">
+<meta name="keywords" content="generic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java泛型一些细节和局限性(03)">
+<meta property="og:url" content="http://yoursite.com/2019/03/15/generic-03/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这些局限性主要与Java的实现机制有关，Java中，泛型是通过类型擦除来实现的，类型参数在编译时会被替换为Object，运行时Java虚拟机不知道泛型这回事，这带来了很多局限性，其中有的部分是比较容易理解的，有的则是非常违反直觉的。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-15T03:48:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java泛型一些细节和局限性(03)">
+<meta name="twitter:description" content="这些局限性主要与Java的实现机制有关，Java中，泛型是通过类型擦除来实现的，类型参数在编译时会被替换为Object，运行时Java虚拟机不知道泛型这回事，这带来了很多局限性，其中有的部分是比较容易理解的，有的则是非常违反直觉的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/15/generic-03/">
+
+
+
+
+
+  <title>java泛型一些细节和局限性(03) | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/15/generic-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java泛型一些细节和局限性(03)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-15T11:48:24+08:00">
+                2019-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  这些局限性主要与Java的实现机制有关，Java中，泛型是通过类型擦除来实现的，类型参数在编译时会被替换为Object，运行时Java虚拟机不知道泛型这回事，这带来了很多局限性，其中有的部分是比较容易理解的，有的则是非常违反直觉的。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>介绍了泛型的基本概念和原理，介绍了泛型中的通配符，本节来介绍泛型中的一些细节和局限性。</p>
+<p>这些局限性主要与Java的实现机制有关，Java中，泛型是通过类型擦除来实现的，类型参数在编译时会被替换为Object，运行时Java虚拟机不知道泛型这回事，这带来了很多局限性，其中有的部分是比较容易理解的，有的则是非常违反直觉的。</p>
+<p>一项技术，往往只有理解了其局限性，我们才算是真正理解了它，才能更好的应用它。</p>
+<p>下面，我们将从以下几个方面来介绍这些细节和局限性：</p>
+<ul>
+<li>使用泛型类、方法和接口</li>
+<li>定义泛型类、方法和接口</li>
+<li>泛型与数组</li>
+</ul>
+<h2 id="使用泛型类、方法和接口"><a href="#使用泛型类、方法和接口" class="headerlink" title="使用泛型类、方法和接口"></a>使用泛型类、方法和接口</h2><p>在使用泛型类、方法和接口时，有一些值得注意的地方，比如：</p>
+<ul>
+<li>基本类型不能用于实例化类型参数</li>
+<li>运行时类型信息不适用于泛型</li>
+<li>类型擦除可能会引发一些冲突</li>
+</ul>
+<p>我们逐个来看下。</p>
+<h2 id="基本类型不能用于实例化类型参数"><a href="#基本类型不能用于实例化类型参数" class="headerlink" title="基本类型不能用于实例化类型参数"></a>基本类型不能用于实例化类型参数</h2><p>Java中，因为类型参数会被替换为Object，所以Java泛型中不能使用基本数据类型，也就是说，类似下面写法是不合法的：</p>
+<pre><code>Pair&lt;int&gt; minmax = new Pair&lt;int&gt;(1,100);
+</code></pre><p>解决方法就是使用基本类型对应的包装类。</p>
+<h3 id="运行时类型信息不适用于泛型"><a href="#运行时类型信息不适用于泛型" class="headerlink" title="运行时类型信息不适用于泛型"></a>运行时类型信息不适用于泛型</h3><p>在介绍<a href="https://link.juejin.im?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzIxOTI1NTk5Nw%3D%3D%26mid%3D2650047185%26idx%3D1%26sn%3D09ef7e948fe723739b4182f688712742%23rd" target="_blank" rel="noopener">继承的实现原理</a>时，我们提到，在内存中，每个类都有一份类型信息，而每个对象也都保存着其对应类型信息的引用。关于运行时信息，后续文章我们会进一步详细介绍，这里简要说明一下。</p>
+<p>在Java中，这个类型信息也是一个对象，它的类型为Class，Class本身也是一个泛型类，每个类的类型对象可以通过<code>&lt;类名&gt;.class</code>的方式引用，比如<code>String.class</code>，<code>Integer.class</code>。</p>
+<p>这个类型对象也可以通过对象的getClass()方法获得，比如：</p>
+<pre><code>Class&lt;?&gt; cls = &quot;hello&quot;.getClass();
+</code></pre><p>这个类型对象只有一份，与泛型无关，所以Java不支持类似如下写法：</p>
+<pre><code>Pair&lt;Integer&gt;.class
+</code></pre><p>一个泛型对象的getClass方法的返回值与原始类型对象也是相同的，比如说，下面代码的输出都是true：</p>
+<pre><code>Pair&lt;Integer&gt; p1 = new Pair&lt;Integer&gt;(1,100);
+Pair&lt;String&gt; p2 = new Pair&lt;String&gt;(&quot;hello&quot;,&quot;world&quot;);
+System.out.println(Pair.class==p1.getClass());
+System.out.println(Pair.class==p2.getClass());
+</code></pre><p>在<a href="https://link.juejin.im?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzIxOTI1NTk5Nw%3D%3D%26mid%3D2650047171%26idx%3D1%26sn%3Dd35089aa39eb7fc5ffe227f399c4b392%23rd" target="_blank" rel="noopener">第16节</a>，我们介绍过instanceof关键字，instanceof后面是接口或类名，instanceof是运行时判断，也与泛型无关，所以，Java也不支持类似如下写法：</p>
+<pre><code>if(p1 instanceof Pair&lt;Integer&gt;)
+</code></pre><p>不过，Java支持这么写：</p>
+<pre><code>if(p1 instanceof Pair&lt;?&gt;)
+</code></pre><h3 id="类型擦除可能会引发一些冲突"><a href="#类型擦除可能会引发一些冲突" class="headerlink" title="类型擦除可能会引发一些冲突"></a>类型擦除可能会引发一些冲突</h3><p>由于类型擦除，可能会引发一些编译冲突，这些冲突初看上去并不容易理解，我们通过一些例子看一下。</p>
+<p>上节我们介绍过一个例子，有两个类Base和Child，Base的声明为：</p>
+<pre><code>class Base implements Comparable&lt;Base&gt;
+</code></pre><p>Child的声明为：</p>
+<pre><code>class Child extends Base
+</code></pre><p>Child没有专门实现Comparable接口，上节我们说Base类已经有了比较所需的全部信息，所以Child没有必要实现，可是如果Child希望自定义这个比较方法呢？直觉上，可以这样修改Child类：</p>
+<pre><code>class Child extends Base implements Comparable&lt;Child&gt;{
+    @Override
+    public int compareTo(Child o) {
+
+    }
+    //...
+}
+</code></pre><p>遗憾的是，Java编译器会提示错误，Comparable接口不能被实现两次，且两次实现的类型参数还不同，一次是<code>Comparable&lt;Base&gt;</code>，一次是<code>Comparable&lt;Child&gt;</code>。为什么不允许呢？因为类型擦除后，实际上只能有一个。</p>
+<p>那Child有什么办法修改比较方法呢？只能是重写Base类的实现，如下所示：</p>
+<pre><code>class Child extends Base {
+    @Override
+    public int compareTo(Base o) {
+        if(!(o instanceof Child)){
+            throw new IllegalArgumentException();
+        }
+        Child c = (Child)o;
+        //...
+        return 0;
+    }
+    //...
+}
+</code></pre><p>还有，你可能认为可以这么定义重载方法：</p>
+<pre><code>public static void test(DynamicArray&lt;Integer&gt; intArr)
+public static void test(DynamicArray&lt;String&gt; strArr)
+</code></pre><p>虽然参数都是DynamicArray，但实例化类型不同，一个是<code>DynamicArray&lt;Integer&gt;</code>，另一个是<code>DynamicArray&lt;String&gt;</code>，同样，遗憾的是，Java不允许这种写法，理由同样是，类型擦除后，它们的声明是一样的。</p>
+<h2 id="定义泛型类、方法和接口"><a href="#定义泛型类、方法和接口" class="headerlink" title="定义泛型类、方法和接口"></a>定义泛型类、方法和接口</h2><p>在定义泛型类、方法和接口时，也有一些需要注意的地方，比如：</p>
+<ul>
+<li>不能通过类型参数创建对象</li>
+<li>泛型类类型参数不能用于静态变量和方法</li>
+<li>了解多个类型限定的语法</li>
+</ul>
+<p>我们逐个来看下。</p>
+<h3 id="不能通过类型参数创建对象"><a href="#不能通过类型参数创建对象" class="headerlink" title="不能通过类型参数创建对象"></a>不能通过类型参数创建对象</h3><p>不能通过类型参数创建对象，比如，T是类型参数，下面写法都是非法的：</p>
+<pre><code>T elm = new T();
+T[] arr = new T[10];
+</code></pre><p>为什么非法呢？因为如果允许，那你以为创建的就是对应类型的对象，但由于类型擦除，Java只能创建Object类型的对象，而无法创建T类型的对象，容易引起误解，所以Java干脆禁止这么做。</p>
+<p>那如果确实希望根据类型创建对象呢？需要设计API接受类型对象，即Class对象，并使用Java中的反射机制，后续文章我们再详细介绍反射，这里简要说明一下，如果类型有默认构造方法，可以调用Class的newInstance方法构建对象，类似这样：</p>
+<pre><code>public static &lt;T&gt; T create(Class&lt;T&gt; type){
+    try {
+        return type.newInstance();
+    } catch (Exception e) {
+        return null;
+    }
+}
+</code></pre><p>比如：</p>
+<pre><code>Date date = create(Date.class);
+StringBuilder sb = create(StringBuilder.class);
+</code></pre><h3 id="泛型类类型参数不能用于静态变量和方法"><a href="#泛型类类型参数不能用于静态变量和方法" class="headerlink" title="泛型类类型参数不能用于静态变量和方法"></a>泛型类类型参数不能用于静态变量和方法</h3><p>对于泛型类声明的类型参数，可以在实例变量和方法中使用，但在静态变量和静态方法中是不能使用的。类似下面这种写法是非法的：</p>
+<pre><code>public class Singleton&lt;T&gt; {
+
+    private static T instance;
+
+    public synchronized static T getInstance(){
+        if(instance==null){
+             // 创建实例
+        }
+        return instance;
+    }
+}    
+</code></pre><p>如果合法的话，那么对于每种实例化类型，都需要有一个对应的静态变量和方法。但由于类型擦除，Singleton类型只有一份，静态变量和方法都是类型的属性，且与类型参数无关，所以不能使用泛型类类型参数。</p>
+<p>不过，对于静态方法，它可以是泛型方法，可以声明自己的类型参数，这个参数与泛型类的类型参数是没有关系的。</p>
+<h3 id="了解多个类型限定的语法"><a href="#了解多个类型限定的语法" class="headerlink" title="了解多个类型限定的语法"></a>了解多个类型限定的语法</h3><p>之前介绍类型参数限定的时候，我们介绍，上界可以为某个类、某个接口或者其他类型参数，但上界都是只有一个，Java中还支持多个上界，多个上界之间以&amp;分隔，类似这样：</p>
+<pre><code>T extends Base &amp; Comparable &amp; Serializable
+</code></pre><p>Base为上界类，Comparable和Serializable为上界接口，如果有上界类，类应该放在第一个，类型擦除时，会用第一个上界替换。</p>
+<h2 id="泛型与数组"><a href="#泛型与数组" class="headerlink" title="泛型与数组"></a>泛型与数组</h2><p>泛型与数组的关系稍微复杂一些，我们单独讨论一下。</p>
+<h3 id="为什么不能创建泛型数组"><a href="#为什么不能创建泛型数组" class="headerlink" title="为什么不能创建泛型数组?"></a>为什么不能创建泛型数组?</h3><p>引入泛型后，一个令人惊讶的事实是，你不能创建泛型数组。比如说，我们可能想这样创建一个Pair的泛型数组，以表示随机一节中介绍的奖励面额和权重。</p>
+<pre><code>Pair&lt;Object,Integer&gt;[] options = new Pair&lt;Object,Integer&gt;[]{
+        new Pair(&quot;1元&quot;,7),
+        new Pair(&quot;2元&quot;, 2),
+        new Pair(&quot;10元&quot;, 1)
+};
+</code></pre><p>Java会提示编译错误，不能创建泛型数组。这是为什么呢？我们先来进一步理解一下数组。</p>
+<p>前面我们解释过，类型参数之间有继承关系的容器之间是没有关系的，比如，一个<code>DynamicArray&lt;Integer&gt;</code>对象不能赋值给一个<code>DynamicArray&lt;Number&gt;</code>变量。不过，数组是可以的，看代码：</p>
+<pre><code>Integer[] ints = new Integer[10];
+Number[] numbers = ints;
+Object[] objs = ints;
+</code></pre><p>后面两种赋值都是允许的。数组为什么可以呢？数组是Java直接支持的概念，它知道数组元素的实际类型，它知道Object和Number都是Integer的父类型，所以这个操作是允许的。</p>
+<p>虽然Java允许这种转换，但如果使用不当，可能会引起运行时异常，比如：</p>
+<pre><code>Integer[] ints = new Integer[10];
+Object[] objs = ints;
+objs[0] = &quot;hello&quot;;
+</code></pre><p>编译是没有问题的，运行时会抛出ArrayStoreException，因为Java知道实际的类型是Integer，所以写入String会抛出异常。</p>
+<p>理解了数组的这个行为，我们再来看泛型数组。如果Java允许创建泛型数组，则会发生非常严重的问题，我们看看具体会发生什么：</p>
+<pre><code>Pair&lt;Object,Integer&gt;[] options = new Pair&lt;Object,Integer&gt;[3];
+Object[] objs = options;
+objs[0] = new Pair&lt;Double,String&gt;(12.34,&quot;hello&quot;);
+</code></pre><p>如果可以创建泛型数组options，那它就可以赋值给其他类型的数组objs，而最后一行明显错误的赋值操作，则既不会引起编译错误，也不会触发运行时异常，因为<code>Pair&lt;Double,String&gt;</code>的运行时类型是Pair，和objs的运行时类型Pair[]是匹配的。但我们知道，它的实际类型是不匹配的，在程序的其他地方，当把objs[0]当做<code>Pair&lt;Object,Integer&gt;</code>进行处理的时候，一定会触发异常。</p>
+<p>也就是说，如果允许创建泛型数组，那就可能会有上面这种错误操作，它既不会引起编译错误，也不会立即触发运行时异常，却相当于埋下了一颗炸弹，不定什么时候爆发，为避免这种情况，Java干脆就禁止创建泛型数组。</p>
+<h3 id="如何存放泛型对象"><a href="#如何存放泛型对象" class="headerlink" title="如何存放泛型对象?"></a>如何存放泛型对象?</h3><p>但，现实需要能够存放泛型对象的容器啊，怎么办呢？可以使用原始类型的数组，比如：</p>
+<pre><code>Pair[] options = new Pair[]{
+      new Pair&lt;String,Integer&gt;(&quot;1元&quot;,7),
+      new Pair&lt;String,Integer&gt;(&quot;2元&quot;, 2),
+      new Pair&lt;String,Integer&gt;(&quot;10元&quot;, 1)};
+</code></pre><p>更好的选择是，使用后续章节介绍的泛型容器。目前，可以使用我们自己实现的DynamicArray，比如：</p>
+<pre><code>DynamicArray&lt;Pair&lt;String,Integer&gt;&gt; options = new DynamicArray&lt;&gt;();
+options.add(new Pair&lt;String,Integer&gt;(&quot;1元&quot;,7));
+options.add(new Pair&lt;String,Integer&gt;(&quot;2元&quot;,2));
+options.add(new Pair&lt;String,Integer&gt;(&quot;10元&quot;,1));
+</code></pre><p>DynamicArray内部的数组为Object类型，一些操作插入了强制类型转换，外部接口是类型安全的，对数组的访问都是内部代码，可以避免误用和类型异常。</p>
+<h3 id="如何转换容器为数组"><a href="#如何转换容器为数组" class="headerlink" title="如何转换容器为数组?"></a>如何转换容器为数组?</h3><p>有时，我们希望转换泛型容器为一个数组，比如说，对于DynamicArray，我们可能希望它有这么一个方法：</p>
+<pre><code>public E[] toArray()
+</code></pre><p>而我们希望可以这么用：</p>
+<pre><code>DynamicArray&lt;Integer&gt; ints = new DynamicArray&lt;Integer&gt;();
+ints.add(100);
+ints.add(34);
+Integer[] arr = ints.toArray();
+</code></pre><p>先使用动态容器收集一些数据，然后转换为一个固定数组，这也是一个常见合理的需求，怎么来实现这个toArray方法呢？</p>
+<p>可能想先这样：</p>
+<pre><code>E[] arr = new E[size];
+</code></pre><p>遗憾的是，如之前所述，这是不合法的。Java运行时根本不知道E是什么，也就无法做到创建E类型的数组。</p>
+<p>另一种想法是这样：</p>
+<pre><code>public E[] toArray(){
+    Object[] copy = new Object[size];
+    System.arraycopy(elementData, 0, copy, 0, size);
+    return (E[])copy;
+}
+</code></pre><p>或者使用之前介绍的Arrays方法：</p>
+<pre><code>public E[] toArray(){
+    return (E[])Arrays.copyOf(elementData, size);
+}
+</code></pre><p>结果都是一样的，没有编译错误了，但运行时，会抛出ClassCastException异常，原因是，Object类型的数组不能转换为Integer类型的数组。</p>
+<p>那怎么办呢？可以利用Java中的运行时类型信息和反射机制，这些概念我们后续章节再介绍。这里，我们简要介绍下。</p>
+<p>Java必须在运行时知道你要转换成的数组类型，类型可以作为参数传递给toArray方法，比如：</p>
+<pre><code>public E[] toArray(Class&lt;E&gt; type){
+    Object copy = Array.newInstance(type, size);
+    System.arraycopy(elementData, 0, copy, 0, size);
+    return (E[])copy;
+}
+</code></pre><p><code>Class&lt;E&gt;</code>表示要转换成的数组类型信息，有了这个类型信息，Array类的newInstance方法就可以创建出真正类型的数组对象。</p>
+<p>调用toArray方法时，需要传递需要的类型，比如，可以这样：</p>
+<pre><code>Integer[] arr = ints.toArray(Integer.class);
+</code></pre><h3 id="泛型与数组小结"><a href="#泛型与数组小结" class="headerlink" title="泛型与数组小结"></a>泛型与数组小结</h3><p>我们来稍微总结下泛型与数组的关系：</p>
+<ul>
+<li>Java不支持创建泛型数组。</li>
+<li>如果要存放泛型对象，可以使用原始类型的数组，或者使用泛型容器。</li>
+<li>泛型容器内部使用Object数组，如果要转换泛型容器为对应类型的数组，需要使用反射。</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本节介绍了泛型的一些细节和局限性，这些局限性主要是由于Java泛型的实现机制引起的，这些局限性包括，不能使用基本类型，没有运行时类型信息，类型擦除会引发一些冲突，不能通过类型参数创建对象，不能用于静态变量等，我们还单独讨论了泛型与数组的关系。</p>
+<p>我们需要理解这些局限性，但，幸运的是，一般并不需要特别去记忆，因为用错的时候，Java开发环境和编译器会提示你，当被提示时，你需要能够理解，并可以从容应对。</p>
+<p>至此，关于泛型的介绍就结束了，泛型是Java容器类的基础，理解了泛型，接下来，就让我们开始探索Java中的容器类。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/generic/" rel="tag"># generic</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/15/generic-02/" rel="next" title="java泛型通配符(02)">
+                <i class="fa fa-chevron-left"></i> java泛型通配符(02)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/15/container-arrayList/" rel="prev" title="java容器ArrayList">
+                java容器ArrayList <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用泛型类、方法和接口"><span class="nav-number">1.</span> <span class="nav-text">使用泛型类、方法和接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型不能用于实例化类型参数"><span class="nav-number">2.</span> <span class="nav-text">基本类型不能用于实例化类型参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时类型信息不适用于泛型"><span class="nav-number">2.1.</span> <span class="nav-text">运行时类型信息不适用于泛型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型擦除可能会引发一些冲突"><span class="nav-number">2.2.</span> <span class="nav-text">类型擦除可能会引发一些冲突</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义泛型类、方法和接口"><span class="nav-number">3.</span> <span class="nav-text">定义泛型类、方法和接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不能通过类型参数创建对象"><span class="nav-number">3.1.</span> <span class="nav-text">不能通过类型参数创建对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型类类型参数不能用于静态变量和方法"><span class="nav-number">3.2.</span> <span class="nav-text">泛型类类型参数不能用于静态变量和方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解多个类型限定的语法"><span class="nav-number">3.3.</span> <span class="nav-text">了解多个类型限定的语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型与数组"><span class="nav-number">4.</span> <span class="nav-text">泛型与数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么不能创建泛型数组"><span class="nav-number">4.1.</span> <span class="nav-text">为什么不能创建泛型数组?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何存放泛型对象"><span class="nav-number">4.2.</span> <span class="nav-text">如何存放泛型对象?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何转换容器为数组"><span class="nav-number">4.3.</span> <span class="nav-text">如何转换容器为数组?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型与数组小结"><span class="nav-number">4.4.</span> <span class="nav-text">泛型与数组小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

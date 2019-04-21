@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="dubbo,分布式,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Dubbo支持dubbo、rmi、hessian、http、webservice、thrift、redis等多种协议，但是Dubbo官网是推荐我们使用Dubbo协议的,使用配置">
+<meta name="keywords" content="dubbo,分布式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dubbo Protocol">
+<meta property="og:url" content="http://yoursite.com/2019/03/14/dubbo-protocol/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Dubbo支持dubbo、rmi、hessian、http、webservice、thrift、redis等多种协议，但是Dubbo官网是推荐我们使用Dubbo协议的,使用配置">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-14T09:29:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dubbo Protocol">
+<meta name="twitter:description" content="Dubbo支持dubbo、rmi、hessian、http、webservice、thrift、redis等多种协议，但是Dubbo官网是推荐我们使用Dubbo协议的,使用配置">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/14/dubbo-protocol/">
+
+
+
+
+
+  <title>Dubbo Protocol | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/14/dubbo-protocol/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Dubbo Protocol</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T17:29:18+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Dubbo支持dubbo、rmi、hessian、http、webservice、thrift、redis等多种协议，但是Dubbo官网是推荐我们使用Dubbo协议的,使用配置
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="启动服务方法"><a href="#启动服务方法" class="headerlink" title="启动服务方法"></a>启动服务方法</h1><p>如果提供方没有启动的时候、默认会去检测所依赖的服务是否正常提供服务</p>
+<p>如果check为false，表示启动的时候不去检查，当服务循环依赖的时候，check设置为false</p>
+<p>dubbo:referene 属性check 默认为true</p>
+<p>dubbo:consumer check= false 没有服务提供方的时候、报错</p>
+<p>dubbo:registry check=false 注册订阅失败报错</p>
+<h1 id="多协议支持"><a href="#多协议支持" class="headerlink" title="多协议支持"></a>多协议支持</h1><h2 id="dubbo协议"><a href="#dubbo协议" class="headerlink" title="dubbo协议"></a>dubbo协议</h2><ul>
+<li>缺省协议</li>
+<li>链接个数：单链接</li>
+<li>连接方式：长连接</li>
+<li>传输方式：NIO异步传输</li>
+<li>序列化：Hession二进制序列化</li>
+<li>适用范围：传入传出参数数据包小（建议小于100K），消费者比提供者个数多，尽量不要适用dubbo协议传输大文件或超大字符串</li>
+<li>适用场景：常规远程服务方法调用</li>
+</ul>
+<h5 id="为什么要消费者比提供者个数多？"><a href="#为什么要消费者比提供者个数多？" class="headerlink" title="为什么要消费者比提供者个数多？"></a>为什么要消费者比提供者个数多？</h5><p>因dubbo协议采用单一长连接，假设网络为千兆网卡(1024Mbit=128MByte)，根据测试经验数据每条连接最多只能压满7MByte(不同的环境可能不一样，供参考)，理论上1个服务提供者需要20个服务消费者才能压满网卡 </p>
+<h5 id="为什么不能传大包？"><a href="#为什么不能传大包？" class="headerlink" title="为什么不能传大包？"></a>为什么不能传大包？</h5><p>因dubbo协议采用单一长连接，如果每次请求的数据包大小为500KByte，假设网络为千兆网卡(1024Mbit=128MByte)，每条连接最大7MByte(不同的环境可能不一样，供参考)，单个服务提供者的TPS(每秒处理事务数)最大为：128MByte / 500KByte = 262。单个消费者调用单个服务提供者的TPS(每秒处理事务数)最大为：7MByte / 500KByte = 14。如果能接受，可以考虑使用，否则网络将成为瓶颈。 </p>
+<h5 id="为什么采用异步单一长连接？"><a href="#为什么采用异步单一长连接？" class="headerlink" title="为什么采用异步单一长连接？"></a>为什么采用异步单一长连接？</h5><p>因为服务的现状大都是服务提供者少，通常只有几台机器，而服务的消费者多，可能整个网站都在访问该服务，比如Morgan的提供者只有6台提供者，却有上百台消费者，每天有1.5亿次调用，如果采用常规的hessian服务，服务提供者很容易就被压跨，通过单一连接，保证单一消费者不会压死提供者，长连接，减少连接握手验证等，并使用异步IO，复用线程池，防止C10K问题。<br>接口增加方法，对客户端无影响，如果该方法不是客户端需要的，客户端不需要重新部署；<br>输入参数和结果集中增加属性，对客户端无影响，如果客户端并不需要新属性，不用重新<br>部署；<br>输入参数和结果集属性名变化，对客户端序列化无影响，但是如果客户端不重新部署，不管输入还是输出，属性名变化的属性值是获取不到的。<br>总结：服务器端和客户端对领域对象并不需要完全一致，而是按照最大匹配原则。 </p>
+<h2 id="rmi协议"><a href="#rmi协议" class="headerlink" title="rmi协议"></a>rmi协议</h2><ul>
+<li>连接个数：多连接</li>
+<li>连接方式：短连接 </li>
+<li>传输协议：TCP </li>
+<li>传输方式：同步传输 </li>
+<li>序列化：Java标准二进制序列化 </li>
+<li>适用范围：传入传出参数数据包大小混合，消费者与提供者个数差不多，可传文件</li>
+<li>适用场景：常规远程服务方法调用，与原生RMI服务互操作</li>
+</ul>
+<h2 id="hessian协议"><a href="#hessian协议" class="headerlink" title="hessian协议"></a>hessian协议</h2><ul>
+<li>连接个数：多连接</li>
+<li>连接方式：短连接 </li>
+<li>传输协议：Http </li>
+<li>传输方式：同步传输 </li>
+<li>序列化：表单序列化 </li>
+<li>适用范围：传入传出参数数据包大小混合，提供者比消费者个数多，可用浏览器查看，可用表单或URL传入参数，暂不支持传文件。 </li>
+<li>适用场景：需同时给应用程序和浏览器JS使用的服务</li>
+</ul>
+<h2 id="Http协议"><a href="#Http协议" class="headerlink" title="Http协议"></a>Http协议</h2><ul>
+<li>连接个数：多连接</li>
+<li>连接方式：短连接 </li>
+<li>传输协议：Http </li>
+<li>传输方式：同步传输 </li>
+<li>序列化：表单序列化 </li>
+<li>适用范围：传入传出参数数据包大小混合，提供者比消费者个数多，可用浏览器查看，可用表单或URL传入参数，暂不支持传文件。 </li>
+<li>适用场景：需同时给应用程序和浏览器JS使用的服务</li>
+</ul>
+<h2 id="webService协议"><a href="#webService协议" class="headerlink" title="webService协议"></a>webService协议</h2><ul>
+<li>连接个数：多连接</li>
+<li>连接方式：短连接 </li>
+<li>传输协议：Http </li>
+<li>传输方式：同步传输 </li>
+<li>序列化：SOAP文本序列化 </li>
+<li>系统集成，跨语言调用</li>
+</ul>
+<h2 id="thrift协议"><a href="#thrift协议" class="headerlink" title="thrift协议"></a>thrift协议</h2><h2 id="memcached协议"><a href="#memcached协议" class="headerlink" title="memcached协议"></a>memcached协议</h2><h2 id="redis协议"><a href="#redis协议" class="headerlink" title="redis协议"></a>redis协议</h2><h1 id="集群容错"><a href="#集群容错" class="headerlink" title="集群容错"></a>集群容错</h1><p>failOver:失败自动切换并重试其他服务器，通过retries=2，来设置重试机制</p>
+<p>failfast:快速失败，只发起一次调用；写操作。比如增加记录的时候、非幂等请求</p>
+<p>failsafe:失败安全，出现异常直接忽略</p>
+<p>failback:失败自动恢复，后台记录请求，定时重发</p>
+<p>forking：并行调用多个服务器，只要一个调用成功立即返回。只能应用在读的请求</p>
+<p>broadcast:广播调用所有提供者，一台报错就抛出异常</p>
+<h1 id="配置优先级"><a href="#配置优先级" class="headerlink" title="配置优先级"></a>配置优先级</h1><p>reference method-&gt;service methond-&gt;reference-&gt;service-&gt;consumer-&gt;provider</p>
+<h1 id="服务的最佳实践"><a href="#服务的最佳实践" class="headerlink" title="服务的最佳实践"></a>服务的最佳实践</h1><h5 id="分包"><a href="#分包" class="headerlink" title="分包"></a>分包</h5><ol>
+<li>服务接口、请求服务模型、异常信息都放在api里面，符合重用发布等价原则，共同重用</li>
+<li>api里面放入spring的引用配置，也可以放在模块的包目录下</li>
+</ol>
+<h5 id="粒度"><a href="#粒度" class="headerlink" title="粒度"></a>粒度</h5><ol>
+<li>尽可能把接口设置成粗粒度，每个服务方法代表一个独立功能，而不是某个功能的步骤，否则会涉及分布式事务</li>
+<li>服务接口建议以业务场景为单位划分。并对相近业务做抽象，防止接口暴增</li>
+<li>不建议使用抽象通用接口T，接口没有明确语义，带来后期维护</li>
+</ol>
+<h5 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h5><ol>
+<li>每个接口都应该定义版本、为后续的兼容性提供前瞻性的考虑 version</li>
+<li>建议使用二位版本号，因为第三位版本号表示兼容性升级，只有不兼容时才需要变更服务版本</li>
+<li>当接口做到不兼容升级的时候，先升级一半或者一台提供者为新版本</li>
+</ol>
+<h5 id="推荐用法"><a href="#推荐用法" class="headerlink" title="推荐用法"></a>推荐用法</h5><ol>
+<li>在provider端尽可能配置consumer端属性，比如timeout、retries、线程池大小、LoadBlance</li>
+<li>配置缓存 注册列表，服务提供者列表</li>
+</ol>
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><p>ExtensionLoader</p>
+<p>invoker</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dubbo/" rel="tag"># dubbo</a>
+          
+            <a href="/tags/分布式/" rel="tag"># 分布式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/15/generic-01/" rel="prev" title="java泛型基本原理和概念(01)">
+                java泛型基本原理和概念(01) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#启动服务方法"><span class="nav-number">1.</span> <span class="nav-text">启动服务方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多协议支持"><span class="nav-number">2.</span> <span class="nav-text">多协议支持</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo协议"><span class="nav-number">2.1.</span> <span class="nav-text">dubbo协议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#为什么要消费者比提供者个数多？"><span class="nav-number">2.1.0.0.1.</span> <span class="nav-text">为什么要消费者比提供者个数多？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#为什么不能传大包？"><span class="nav-number">2.1.0.0.2.</span> <span class="nav-text">为什么不能传大包？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#为什么采用异步单一长连接？"><span class="nav-number">2.1.0.0.3.</span> <span class="nav-text">为什么采用异步单一长连接？</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#rmi协议"><span class="nav-number">2.2.</span> <span class="nav-text">rmi协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hessian协议"><span class="nav-number">2.3.</span> <span class="nav-text">hessian协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Http协议"><span class="nav-number">2.4.</span> <span class="nav-text">Http协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webService协议"><span class="nav-number">2.5.</span> <span class="nav-text">webService协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thrift协议"><span class="nav-number">2.6.</span> <span class="nav-text">thrift协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memcached协议"><span class="nav-number">2.7.</span> <span class="nav-text">memcached协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis协议"><span class="nav-number">2.8.</span> <span class="nav-text">redis协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集群容错"><span class="nav-number">3.</span> <span class="nav-text">集群容错</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置优先级"><span class="nav-number">4.</span> <span class="nav-text">配置优先级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务的最佳实践"><span class="nav-number">5.</span> <span class="nav-text">服务的最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#分包"><span class="nav-number">5.0.0.0.1.</span> <span class="nav-text">分包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#粒度"><span class="nav-number">5.0.0.0.2.</span> <span class="nav-text">粒度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#版本"><span class="nav-number">5.0.0.0.3.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#推荐用法"><span class="nav-number">5.0.0.0.4.</span> <span class="nav-text">推荐用法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码分析"><span class="nav-number">6.</span> <span class="nav-text">源码分析</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

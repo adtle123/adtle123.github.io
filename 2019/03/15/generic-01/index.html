@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="generic,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="泛型将接口的概念进一步延伸，&quot;泛型&quot;字面意思就是广泛的类型，类、接口和方法代码">
+<meta name="keywords" content="generic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java泛型基本原理和概念(01)">
+<meta property="og:url" content="http://yoursite.com/2019/03/15/generic-01/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="泛型将接口的概念进一步延伸，&quot;泛型&quot;字面意思就是广泛的类型，类、接口和方法代码">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-15T03:28:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java泛型基本原理和概念(01)">
+<meta name="twitter:description" content="泛型将接口的概念进一步延伸，&quot;泛型&quot;字面意思就是广泛的类型，类、接口和方法代码">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/15/generic-01/">
+
+
+
+
+
+  <title>java泛型基本原理和概念(01) | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/15/generic-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java泛型基本原理和概念(01)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-15T11:28:02+08:00">
+                2019-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  泛型将接口的概念进一步延伸，"泛型"字面意思就是广泛的类型，类、接口和方法代码
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是泛型？"><a href="#什么是泛型？" class="headerlink" title="什么是泛型？"></a>什么是泛型？</h2><p>之前我们一直强调数据类型的概念，Java有8种基本类型，可以定义类，类相当于自定义数据类型，类之间还可以有组合和继承。不过，在第19节，我们介绍了接口，其中提到，其实，很多时候，我们关心的不是类型，而是能力，针对接口和能力编程，不仅可以复用代码，还可以降低耦合，提高灵活性。</p>
+<blockquote>
+<p>泛型将接口的概念进一步延伸，”泛型”字面意思就是广泛的类型，类、接口和方法代码可以应用于非常广泛的类型，代码与它们能够操作的数据类型不再绑定在一起，同一套代码，可以用于多种数据类型，这样，不仅可以复用代码，降低耦合，同时，还可以提高代码的可读性和安全性。</p>
+</blockquote>
+<p>这么说可能比较抽象，接下来，我们通过一些例子逐步来说明。在Java中，类、接口、方法都可以是泛型的，我们先来看泛型类。</p>
+<h2 id="一个简单泛型类"><a href="#一个简单泛型类" class="headerlink" title="一个简单泛型类"></a>一个简单泛型类</h2><p>我们通过一个简单的例子来说明泛型类的基本概念、实现原理和好处。</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>我们直接来看代码：</p>
+<pre><code>public class Pair&lt;T&gt; {
+
+    T first;
+    T second;
+
+    public Pair(T first, T second){
+        this.first = first;
+        this.second = second;
+    }
+
+    public T getFirst() {
+        return first;
+    }
+
+    public T getSecond() {
+        return second;
+    }
+}
+</code></pre><p>Pair就是一个泛型类，与普通类的区别，体现在：</p>
+<ol>
+<li>类名后面多了一个</li>
+<li>first和second的类型都是T</li>
+</ol>
+<p>T是什么呢？T表示类型参数，泛型就是类型参数化，处理的数据类型不是固定的，而是可以作为参数传入。</p>
+<p>怎么用这个泛型类，并传递类型参数呢？看代码：</p>
+<pre><code>Pair&lt;Integer&gt; minmax = new Pair&lt;Integer&gt;(1,100);
+Integer min = minmax.getFirst();
+Integer max = minmax.getSecond();
+</code></pre><p><code>Pair&lt;Integer&gt;</code>，这里Integer就是传递的实际类型参数。</p>
+<p>Pair类的代码和它处理的数据类型不是绑定的，具体类型可以变化。上面是Integer，也可以是String，比如：</p>
+<pre><code>Pair&lt;String&gt; kv = new Pair&lt;String&gt;(&quot;name&quot;,&quot;老马&quot;);
+</code></pre><p>类型参数可以有多个，Pair类中的first和second可以是不同的类型，多个类型之间以逗号分隔，来看改进后的Pair类定义：</p>
+<pre><code>public class Pair&lt;U, V&gt; {
+
+    U first;
+    V second;
+
+    public Pair(U first, V second){
+        this.first = first;
+        this.second = second;
+    }
+
+    public U getFirst() {
+        return first;
+    }
+
+    public V getSecond() {
+        return second;
+    }
+}
+</code></pre><p>可以这样使用：</p>
+<pre><code>Pair&lt;String,Integer&gt; pair = new Pair&lt;String,Integer&gt;(&quot;老马&quot;,100);
+</code></pre><p><code>&lt;String,Integer&gt;</code>既出现在了声明变量时，也出现在了new后面，比较啰嗦，Java支持省略后面的类型参数，可以这样：</p>
+<pre><code>Pair&lt;String,Integer&gt; pair = new Pair&lt;&gt;(&quot;老马&quot;,100);
+</code></pre><h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>泛型类型参数到底是什么呢？为什么一定要定义类型参数呢？定义普通类，直接使用Object不就行了吗？比如，Pair类可以写为：</p>
+<pre><code>public class Pair {
+
+    Object first;
+    Object second;
+
+    public Pair(Object first, Object second){
+        this.first = first;
+        this.second = second;
+    }
+
+    public Object getFirst() {
+        return first;
+    }
+
+    public Object getSecond() {
+        return second;
+    }
+}    
+</code></pre><p>使用Pair的代码可以为：</p>
+<pre><code>Pair minmax = new Pair(1,100);
+Integer min = (Integer)minmax.getFirst();
+Integer max = (Integer)minmax.getSecond();
+
+Pair kv = new Pair(&quot;name&quot;,&quot;老马&quot;);
+String key = (String)kv.getFirst();
+String value = (String)kv.getSecond();
+</code></pre><p>这样是可以的。实际上，Java泛型的内部原理就是这样的。</p>
+<p>我们知道，Java有Java编译器和Java虚拟机，编译器将Java源代码转换为.class文件，虚拟机加载并运行.class文件。对于泛型类，Java编译器会将泛型代码转换为普通的非泛型代码，就像上面的普通Pair类代码及其使用代码一样，将类型参数T擦除，替换为Object，插入必要的强制类型转换。Java虚拟机实际执行的时候，它是不知道泛型这回事的，它只知道普通的类及代码。</p>
+<p>再强调一下，Java泛型是通过擦除实现的，类定义中的类型参数如T会被替换为Object，在程序运行过程中，不知道泛型的实际类型参数，比如<code>Pair&lt;Integer&gt;</code>，运行中只知道Pair，而不知道Integer，认识到这一点是非常重要的，它有助于我们理解Java泛型的很多限制。</p>
+<p>Java为什么要这么设计呢？泛型是Java 1.5以后才支持的，这么设计是为了兼容性而不得已的一个选择。</p>
+<h3 id="泛型的好处"><a href="#泛型的好处" class="headerlink" title="泛型的好处"></a>泛型的好处</h3><p>既然只使用普通类和Object就是可以的，而且泛型最后也转换为了普通类，那为什么还要用泛型呢？或者说，泛型到底有什么好处呢？</p>
+<p>主要有两个好处：</p>
+<ul>
+<li>更好的安全性</li>
+<li>更好的可读性</li>
+</ul>
+<p>语言和程序设计的一个重要目标是将bug尽量消灭在摇篮里，能消灭在写代码的时候，就不要等到代码写完，程序运行的时候。</p>
+<p>只使用Object，代码写错的时候，开发环境和编译器不能帮我们发现问题，看代码：</p>
+<pre><code>Pair pair = new Pair(&quot;老马&quot;,1);
+Integer id = (Integer)pair.getFirst();
+String name = (String)pair.getSecond();
+</code></pre><p>看出问题了吗？写代码时，不小心，类型弄错了，不过，代码编译时是没有任何问题的，但，运行时，程序抛出了类型转换异常ClassCastException。</p>
+<p>如果使用泛型，则不可能犯这个错误，如果这么写代码：</p>
+<pre><code>Pair&lt;String,Integer&gt; pair = new Pair&lt;&gt;(&quot;老马&quot;,1);
+Integer id = pair.getFirst();
+String name = pair.getSecond();
+</code></pre><p>开发环境如Eclipse会提示你类型错误，即使没有好的开发环境，编译时，Java编译器也会提示你。这称之为类型安全，也就是说，通过使用泛型，开发环境和编译器能确保你不会用错类型，为你的程序多设置一道安全防护网。</p>
+<p>使用泛型，还可以省去繁琐的强制类型转换，再加上明确的类型信息，代码可读性也会更好。</p>
+<h2 id="容器类"><a href="#容器类" class="headerlink" title="容器类"></a>容器类</h2><p>泛型类最常见的用途是作为容器类，所谓容器类，简单的说，就是容纳并管理多项数据的类。数组就是用来管理多项数据的，但数组有很多限制，比如说，长度固定，插入、删除操作效率比较低。计算机技术有一门课程叫数据结构，专门讨论管理数据的各种方式。</p>
+<p>这些数据结构在Java中的实现主要就是Java中的各种容器类，甚至，Java泛型的引入主要也是为了更好的支持Java容器。后续章节我们会详细讨论主要的Java容器，本节我们先自己实现一个非常简单的Java容器，来解释泛型的一些概念。</p>
+<p>我们来实现一个简单的动态数组容器，所谓动态数组，就是长度可变的数组，底层数组的长度当然是不可变的，但我们提供一个类，对这个类的使用者而言，好像就是一个长度可变的数组，Java容器中有一个对应的类ArrayList，本节我们来实现一个简化版。</p>
+<p>来看代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicArray</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">private</span> Object[] elementData;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DynamicArray</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.elementData = <span class="keyword">new</span> Object[DEFAULT_CAPACITY];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">        <span class="keyword">if</span>(oldCapacity&gt;=minCapacity)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> newCapacity = oldCapacity * <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (newCapacity &lt; minCapacity)</span><br><span class="line">            newCapacity = minCapacity;</span><br><span class="line">        elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        ensureCapacity(size + <span class="number">1</span>);</span><br><span class="line">        elementData[size++] = e;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (E)elementData[index];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</span><br><span class="line">        E oldValue = get(index);</span><br><span class="line">        elementData[index] = element;</span><br><span class="line">        <span class="keyword">return</span> oldValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>DynamicArray就是一个动态数组，内部代码与我们之前分析过的StringBuilder类似，通过ensureCapacity方法来根据需要扩展数组。作为一个容器类，它容纳的数据类型是作为参数传递过来的，比如说，存放Double类型：</p>
+<pre><code>DynamicArray&lt;Double&gt; arr = new DynamicArray&lt;Double&gt;();
+Random rnd = new Random();
+int size = 1+rnd.nextInt(100);
+for(int i=0; i&lt;size; i++){
+    arr.add(Math.random());
+}
+
+Double d = arr.get(rnd.nextInt(size));
+</code></pre><p>这就是一个简单的容器类，适用于各种数据类型，且类型安全。本节后面和后面两节还会以DynamicArray为例进行扩展，以解释泛型概念。</p>
+<p>具体的类型还可以是一个泛型类，比如，可以这样写：</p>
+<pre><code>DynamicArray&lt;Pair&lt;Integer,String&gt;&gt; arr = new DynamicArray&lt;&gt;()
+</code></pre><p>arr表示一个动态数组，每个元素是<code>Pair&lt;Integer,String&gt;</code>类型。</p>
+<h2 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h2><p>除了泛型类，方法也可以是泛型的，而且，一个方法是不是泛型的，与它所在的类是不是泛型没有什么关系。</p>
+<p>我们看个例子：</p>
+<pre><code>public static &lt;T&gt; int indexOf(T[] arr, T elm){
+    for(int i=0; i&lt;arr.length; i++){
+        if(arr[i].equals(elm)){
+            return i;
+        }
+    }
+    return -1;
+}
+</code></pre><p>这个方法就是一个泛型方法，类型参数为T，放在返回值前面，它可以这么调用：</p>
+<pre><code>indexOf(new Integer[]{1,3,5}, 10)
+</code></pre><p>也可以这么调用：</p>
+<pre><code>indexOf(new String[]{&quot;hello&quot;,&quot;老马&quot;,&quot;编程&quot;}, &quot;老马&quot;)
+</code></pre><p>indexOf表示一个算法，在给定数组中寻找某一个元素，这个算法的基本过程与具体数据类型没有什么关系，通过泛型，它就可以方便的应用于各种数据类型，且编译器保证类型安全。</p>
+<p>与泛型类一样，类型参数可以有多个，多个以逗号分隔，比如：</p>
+<pre><code>public static &lt;U,V&gt; Pair&lt;U,V&gt; makePair(U first, V second){
+    Pair&lt;U,V&gt; pair = new Pair&lt;&gt;(first, second);
+    return pair;
+}
+</code></pre><p>与泛型类不同，调用方法时一般并不需要特意指定类型参数的实际类型是什么，比如调用makePair：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">makePair(<span class="number">1</span>,<span class="string">"老马"</span>);</span><br></pre></td></tr></table></figure>
+<p>并不需要告诉编译器U的类型是Integer，V的类型是String，Java编译器可以自动推断出来。</p>
+<h2 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h2><p>接口也可以是泛型的，我们之前介绍过的Comparable和Comparator接口都是泛型的，它们的代码如下：</p>
+<pre><code>public interface Comparable&lt;T&gt; {
+    public int compareTo(T o);
+}
+public interface Comparator&lt;T&gt; {
+    int compare(T o1, T o2);
+    boolean equals(Object obj);
+}
+</code></pre><p>与前面一样，T是类型参数。实现接口时，应该指定具体的类型，比如，对Integer类，实现代码是：</p>
+<pre><code>public final class Integer extends Number implements Comparable&lt;Integer&gt;{
+    public int compareTo(Integer anotherInteger) {
+        return compare(this.value, anotherInteger.value);
+    }
+    //...
+}
+</code></pre><p>通过<code>implements Comparable&lt;Integer&gt;</code>，Integer实现了Comparable接口，指定了实际类型参数为Integer，表示Integer只能与Integer对象进行比较。</p>
+<p>再看Comparator的一个例子，String类内部一个Comparator的接口实现为：</p>
+<pre><code>private static class CaseInsensitiveComparator
+        implements Comparator&lt;String&gt; {
+    public int compare(String s1, String s2) {
+        //....
+    }
+}
+复制代码
+</code></pre><p>这里，指定了实际类型参数为String。</p>
+<h2 id="类型参数的限定"><a href="#类型参数的限定" class="headerlink" title="类型参数的限定"></a>类型参数的限定</h2><p>在之前的介绍中，无论是泛型类、泛型方法还是泛型接口，关于类型参数，我们都知之甚少，只能把它当做Object，但Java支持限定这个参数的一个上界，也就是说，参数必须为给定的上界类型或其子类型，这个限定是通过extends这个关键字来表示的。</p>
+<p>这个上界可以是某个具体的类，或者某个具体的接口，也可以是其他的类型参数，我们逐个来看下其应用。</p>
+<h3 id="上界为某个具体类"><a href="#上界为某个具体类" class="headerlink" title="上界为某个具体类"></a>上界为某个具体类</h3><p>比如说，上面的Pair类，可以定义一个子类NumberPair，限定两个类型参数必须为Number，代码如下：</p>
+<pre><code>public class NumberPair&lt;U extends Number, V extends Number&gt; extends Pair&lt;U, V&gt; {
+
+    public NumberPair(U first, V second) {
+        super(first, second);
+    }
+}    
+</code></pre><p>限定类型后，就可以使用该类型的方法了，比如说，对于NumberPair类，first和second变量就可以当做Number进行处理了，比如可以定义一个求和方法，如下所示：</p>
+<pre><code>public double sum(){
+    return getFirst().doubleValue()
+            +getSecond().doubleValue();
+}
+</code></pre><p>可以这么用：</p>
+<pre><code>NumberPair&lt;Integer, Double&gt; pair = new NumberPair&lt;&gt;(10, 12.34);
+double sum = pair.sum();
+</code></pre><p>限定类型后，如果类型使用错误，编译器会提示。</p>
+<p>指定边界后，类型擦除时就不会转换为Object了，而是会转换为它的边界类型，这也是容易理解的。</p>
+<h3 id="上界为某个接口"><a href="#上界为某个接口" class="headerlink" title="上界为某个接口"></a>上界为某个接口</h3><p>在泛型方法中，一种常见的场景是限定类型必须实现Comparable接口，我们来看代码：</p>
+<pre><code>public static &lt;T extends Comparable&gt; T max(T[] arr){
+    T max = arr[0];
+    for(int i=1; i&lt;arr.length; i++){
+        if(arr[i].compareTo(max)&gt;0){
+            max = arr[i];
+        }
+    }
+    return max;
+}
+</code></pre><p>max方法计算一个泛型数组中的最大值，计算最大值需要进行元素之间的比较，要求元素实现Comparable接口，所以给类型参数设置了一个上边界Comparable，T必须实现Comparable接口。</p>
+<p>不过，直接这么写代码，Java中会给一个警告信息，因为Comparable是一个泛型接口，它也需要一个类型参数，所以完整的方法声明应该是：</p>
+<pre><code>public static &lt;T extends Comparable&lt;T&gt;&gt; T max(T[] arr){
+
+//...
+
+}
+</code></pre><p><code>&lt;T extends Comparable&lt;T&gt;&gt;</code>是一种令人费解的语法形式，这种形式称之为递归类型限制，可以这么解读，T表示一种数据类型，必须实现Comparable接口，且必须可以与相同类型的元素进行比较。</p>
+<h3 id="上界为其他类型参数"><a href="#上界为其他类型参数" class="headerlink" title="上界为其他类型参数"></a>上界为其他类型参数</h3><p>上面的限定都是指定了一个明确的类或接口，Java支持一个类型参数以另一个类型参数作为上界。为什么需要这个呢？</p>
+<p>我们看个例子，给上面的DynamicArray类增加一个实例方法addAll，这个方法将参数容器中的所有元素都添加到当前容器里来，直觉上，代码可以这么写：</p>
+<pre><code>public void addAll(DynamicArray&lt;E&gt; c) {
+    for(int i=0; i&lt;c.size; i++){
+        add(c.get(i));
+    }
+}
+</code></pre><p>但这么写有一些局限性，我们看使用它的代码：</p>
+<pre><code>DynamicArray&lt;Number&gt; numbers = new DynamicArray&lt;&gt;();
+DynamicArray&lt;Integer&gt; ints = new DynamicArray&lt;&gt;();
+ints.add(100);
+ints.add(34);
+numbers.addAll(ints);
+</code></pre><p>numbers是一个Number类型的容器，ints是一个Integer类型的容器，我们希望将ints添加到numbers中，因为Integer是Number的子类，应该说，这是一个合理的需求和操作。</p>
+<p>但，Java会在<code>number.addAll(ints)</code>这行代码上提示编译错误，提示，addAll需要的参数类型为<code>DynamicArray&lt;Number&gt;</code>，而传递过来的参数类型为<code>DynamicArray&lt;Integer&gt;</code>，不适用，Integer是Number的子类，怎么会不适用呢？</p>
+<p>事实就是这样，确实不适用，而且是很有道理的，假设适用，我们看下会发生什么。</p>
+<pre><code>DynamicArray&lt;Integer&gt; ints = new DynamicArray&lt;&gt;();
+//假设下面这行是合法的
+DynamicArray&lt;Number&gt; numbers = ints;
+
+numbers.add(new Double(12.34));
+</code></pre><p>那最后一行就是合法的，这时，<code>DynamicArray&lt;Integer&gt;</code>中就会出现Double类型的值，而这，显然就破坏了Java泛型关于类型安全的保证。</p>
+<p>我们强调一下，虽然Integer是Number的子类，但<code>DynamicArray&lt;Integer&gt;</code>并不是<code>DynamicArray&lt;Number&gt;</code>的子类，<code>DynamicArray&lt;Integer&gt;</code>的对象也不能赋值给<code>DynamicArray&lt;Number&gt;</code>的变量，这一点初看上去是违反直觉的，但这是事实，必须要理解这一点。</p>
+<p>不过，我们的需求是合理的啊，将Integer添加到Number容器中，这没有问题啊。这个问题，可以通过类型限定，这样来解决：</p>
+<pre><code>public &lt;T extends E&gt; void addAll(DynamicArray&lt;T&gt; c) {
+    for(int i=0; i&lt;c.size; i++){
+        add(c.get(i));
+    }
+}
+</code></pre><p>E是DynamicArray的类型参数，T是addAll的类型参数，T的上界限定为E，这样，下面的代码就没有问题了：</p>
+<pre><code>DynamicArray&lt;Number&gt; numbers = new DynamicArray&lt;&gt;();
+DynamicArray&lt;Integer&gt; ints = new DynamicArray&lt;&gt;();
+ints.add(100);
+ints.add(34);
+numbers.addAll(ints);
+</code></pre><p>对于这个例子，这个写法有点啰嗦，下节我们会看到一种简化的方式。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>泛型是计算机程序中一种重要的思维方式，它将数据结构和算法与数据类型相分离，使得同一套数据结构和算法，能够应用于各种数据类型，而且还可以保证类型安全，提高可读性。在Java中，泛型广泛应用于各种容器类中，理解泛型是深刻理解容器的基础。</p>
+<p>本节介绍了泛型的基本概念，包括泛型类、泛型方法和泛型接口，关于类型参数，我们介绍了多种上界限定，限定为某具体类、某具体接口、或其他类型参数。泛型类最常见的用途是容器类，我们实现了一个简单的容器类DynamicArray，以解释泛型概念。</p>
+<p>在Java中，泛型是通过类型擦除来实现的，它是Java编译器的概念，Java虚拟机运行时对泛型基本一无所知，理解这一点是很重要的，它有助于我们理解Java泛型的很多局限性。</p>
+<p>关于泛型，Java中有一个通配符的概念，语法非常令人费解，而且容易混淆，下一节，我们力图对它进行清晰的剖析。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/generic/" rel="tag"># generic</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/14/dubbo-protocol/" rel="next" title="Dubbo Protocol">
+                <i class="fa fa-chevron-left"></i> Dubbo Protocol
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/15/generic-02/" rel="prev" title="java泛型通配符(02)">
+                java泛型通配符(02) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是泛型？"><span class="nav-number">1.</span> <span class="nav-text">什么是泛型？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单泛型类"><span class="nav-number">2.</span> <span class="nav-text">一个简单泛型类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">2.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本原理"><span class="nav-number">2.2.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型的好处"><span class="nav-number">2.3.</span> <span class="nav-text">泛型的好处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器类"><span class="nav-number">3.</span> <span class="nav-text">容器类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型方法"><span class="nav-number">4.</span> <span class="nav-text">泛型方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型接口"><span class="nav-number">5.</span> <span class="nav-text">泛型接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型参数的限定"><span class="nav-number">6.</span> <span class="nav-text">类型参数的限定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#上界为某个具体类"><span class="nav-number">6.1.</span> <span class="nav-text">上界为某个具体类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上界为某个接口"><span class="nav-number">6.2.</span> <span class="nav-text">上界为某个接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上界为其他类型参数"><span class="nav-number">6.3.</span> <span class="nav-text">上界为其他类型参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

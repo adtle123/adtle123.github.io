@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="generic,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="泛型中的通配符概念">
+<meta name="keywords" content="generic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java泛型通配符(02)">
+<meta property="og:url" content="http://yoursite.com/2019/03/15/generic-02/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="泛型中的通配符概念">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-15T03:35:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java泛型通配符(02)">
+<meta name="twitter:description" content="泛型中的通配符概念">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/15/generic-02/">
+
+
+
+
+
+  <title>java泛型通配符(02) | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/15/generic-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java泛型通配符(02)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-15T11:35:17+08:00">
+                2019-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  泛型中的通配符概念
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们介绍了泛型的基本概念和原理，本节继续讨论泛型，主要讨论泛型中的通配符概念。通配符有着令人费解和混淆的语法，但通配符大量应用于Java容器类中，它到底是什么？本节，让我们逐步来解析。</p>
+<h2 id="更简洁的参数类型限定"><a href="#更简洁的参数类型限定" class="headerlink" title="更简洁的参数类型限定"></a>更简洁的参数类型限定</h2><p>在上节最后，我们提到一个例子，为了将Integer对象添加到Number容器中，我们的类型参数使用了其他类型参数作为上界，代码是：</p>
+<pre><code>public &lt;T extends E&gt; void addAll(DynamicArray&lt;T&gt; c) {
+    for(int i=0; i&lt;c.size; i++){
+        add(c.get(i));
+    }
+}
+</code></pre><p>我们提到，这个写法有点啰嗦，它可以替换为更为简洁的通配符形式：</p>
+<pre><code>public void addAll(DynamicArray&lt;? extends E&gt; c) {
+    for(int i=0; i&lt;c.size; i++){
+        add(c.get(i));
+    }
+}
+</code></pre><p>这个方法没有定义类型参数，c的类型是<code>DynamicArray&lt;? extends E&gt;</code>，?表示通配符，<code>&lt;? extends E&gt;</code>表示有限定通配符，匹配E或E的某个子类型，具体什么子类型，我们不知道。</p>
+<p>使用这个方法的代码不需要做任何改动，还可以是：</p>
+<pre><code>DynamicArray&lt;Number&gt; numbers = new DynamicArray&lt;&gt;();
+DynamicArray&lt;Integer&gt; ints = new DynamicArray&lt;&gt;();
+ints.add(100);
+ints.add(34);
+numbers.addAll(ints);
+</code></pre><p>这里，E是Number类型，<code>DynamicArray&lt;? extends E&gt;</code>可以匹配<code>DynamicArray&lt;Integer&gt;</code>。</p>
+<h3 id="lt-T-extends-E-gt-与-lt-extends-E-gt"><a href="#lt-T-extends-E-gt-与-lt-extends-E-gt" class="headerlink" title="&lt;T extends E&gt;与&lt;? extends E&gt;"></a><code>&lt;T extends E&gt;</code>与<code>&lt;? extends E&gt;</code></h3><p>那么问题来了，同样是extends关键字，同样应用于泛型，<code>&lt;T extends E&gt;</code>和<code>&lt;? extends E&gt;</code>到底有什么关系？</p>
+<p>它们用的地方不一样，我们解释一下：</p>
+<ul>
+<li><code>&lt;T extends E&gt;</code>用于定义类型参数，它声明了一个类型参数T，可放在泛型类定义中类名后面、泛型方法返回值前面。</li>
+<li><code>&lt;? extends E&gt;</code>用于实例化类型参数，它用于实例化泛型变量中的类型参数，只是这个具体类型是未知的，只知道它是E或E的某个子类型。</li>
+</ul>
+<p>虽然它们不一样，但两种写法经常可以达成相同目标，比如，前面例子中，下面两种写法都可以：</p>
+<pre><code>public void addAll(DynamicArray&lt;? extends E&gt; c)
+public &lt;T extends E&gt; void addAll(DynamicArray&lt;T&gt; c) 
+</code></pre><p>那，到底应该用哪种形式呢？我们先进一步理解通配符，然后再解释。</p>
+<h2 id="理解通配符"><a href="#理解通配符" class="headerlink" title="理解通配符"></a>理解通配符</h2><h3 id="无限定通配符"><a href="#无限定通配符" class="headerlink" title="无限定通配符"></a>无限定通配符</h3><p>还有一种通配符，形如<code>DynamicArray&lt;?&gt;</code>，称之为无限定通配符，我们来看个使用的例子，在DynamicArray中查找指定元素，代码如下：</p>
+<pre><code>public static int indexOf(DynamicArray&lt;?&gt; arr, Object elm){
+    for(int i=0; i&lt;arr.size(); i++){
+        if(arr.get(i).equals(elm)){
+            return i;
+        }
+    }
+    return -1;
+}
+</code></pre><p>其实，这种无限定通配符形式，也可以改为使用类型参数。也就是说，下面写法：</p>
+<pre><code>public static int indexOf(DynamicArray&lt;?&gt; arr, Object elm)
+</code></pre><p>可以改为：</p>
+<pre><code>public static &lt;T&gt; int indexOf(DynamicArray&lt;T&gt; arr, Object elm)
+</code></pre><p>不过，通配符形式更为简洁。</p>
+<h3 id="通配符的只读性"><a href="#通配符的只读性" class="headerlink" title="通配符的只读性"></a>通配符的只读性</h3><p>通配符形式更为简洁，但上面两种通配符都有一个重要的限制，只能读，不能写。</p>
+<p>怎么理解呢？看下面例子：</p>
+<pre><code>DynamicArray&lt;Integer&gt; ints = new DynamicArray&lt;&gt;();
+DynamicArray&lt;? extends Number&gt; numbers = ints;
+Integer a = 200;
+numbers.add(a);
+numbers.add((Number)a);
+numbers.add((Object)a);
+</code></pre><p>三种add方法都是非法的，无论是Integer，还是Number或Object，编译器都会报错。为什么呢？</p>
+<p>?就是表示类型安全无知，<code>? extends Number</code>表示是Number的某个子类型，但不知道具体子类型，如果允许写入，Java就无法确保类型安全性，所以干脆禁止。我们来看个例子，看看如果允许写入会发生什么：</p>
+<pre><code>DynamicArray&lt;Integer&gt; ints = new DynamicArray&lt;&gt;();
+DynamicArray&lt;? extends Number&gt; numbers = ints;
+Number n = new Double(23.0);
+Object o = new String(&quot;hello world&quot;);
+numbers.add(n);
+numbers.add(o);
+</code></pre><p>如果允许写入Object或Number类型，则最后两行编译就是正确的，也就是说，Java将允许把Double或String对象放入Integer容器，这显然就违背了Java关于类型安全的承诺。</p>
+<p>大部分情况下，这种限制是好的，但这使得一些理应正确的基本操作都无法完成，比如交换两个元素的位置，看代码：</p>
+<pre><code>public static void swap(DynamicArray&lt;?&gt; arr, int i, int j){
+    Object tmp = arr.get(i);
+    arr.set(i, arr.get(j));
+    arr.set(j, tmp);
+}
+</code></pre><p>这个代码看上去应该是正确的，但Java会提示编译错误，两行set语句都是非法的。不过，借助带类型参数的泛型方法，这个问题可以这样解决：</p>
+<pre><code>private static &lt;T&gt; void swapInternal(DynamicArray&lt;T&gt; arr, int i, int j){
+    T tmp = arr.get(i);
+    arr.set(i, arr.get(j));
+    arr.set(j, tmp);
+}
+
+public static void swap(DynamicArray&lt;?&gt; arr, int i, int j){
+    swapInternal(arr, i, j);
+}
+</code></pre><p>swap可以调用swapInternal，而带类型参数的swapInternal可以写入。Java容器类中就有类似这样的用法，公共的API是通配符形式，形式更简单，但内部调用带类型参数的方法。</p>
+<h3 id="参数类型间的依赖关系"><a href="#参数类型间的依赖关系" class="headerlink" title="参数类型间的依赖关系"></a>参数类型间的依赖关系</h3><p>除了这种需要写的场合，如果参数类型之间有依赖关系，也只能用类型参数，比如说，看下面代码，将src容器中的内容拷贝到dest中：</p>
+<pre><code>public static &lt;D,S extends D&gt; void copy(DynamicArray&lt;D&gt; dest,
+        DynamicArray&lt;S&gt; src){
+    for(int i=0; i&lt;src.size(); i++){
+        dest.add(src.get(i));
+    }
+}
+</code></pre><p>S和D有依赖关系，要么相同，要么S是D的子类，否则类型不兼容，有编译错误。不过，上面的声明可以使用通配符简化一下，两个参数可以简化为一个，如下所示：</p>
+<pre><code>public static &lt;D&gt; void copy(DynamicArray&lt;D&gt; dest,
+        DynamicArray&lt;? extends D&gt; src){
+    for(int i=0; i&lt;src.size(); i++){
+        dest.add(src.get(i));
+    }
+}
+</code></pre><h3 id="通配符与返回值"><a href="#通配符与返回值" class="headerlink" title="通配符与返回值"></a>通配符与返回值</h3><p>还有，如果返回值依赖于类型参数，也不能用通配符，比如，计算动态数组中的最大值，如下所示：</p>
+<pre><code>public static &lt;T extends Comparable&lt;T&gt;&gt; T max(DynamicArray&lt;T&gt; arr){
+    T max = arr.get(0);
+    for(int i=1; i&lt;arr.size(); i++){
+        if(arr.get(i).compareTo(max)&gt;0){
+            max = arr.get(i);
+        }
+    }
+    return max;
+}
+</code></pre><p>上面的代码就难以用通配符代替。</p>
+<h3 id="通配符还是类型参数？"><a href="#通配符还是类型参数？" class="headerlink" title="通配符还是类型参数？"></a>通配符还是类型参数？</h3><p>现在我们再来看，泛型方法，到底应该用通配符的形式，还是加类型参数？两者到底有什么关系？我们总结下：</p>
+<ul>
+<li>通配符形式都可以用类型参数的形式来替代，通配符能做的，用类型参数都能做。</li>
+<li>通配符形式可以减少类型参数，形式上往往更为简单，可读性也更好，所以，能用通配符的就用通配符。</li>
+<li>如果类型参数之间有依赖关系，或者返回值依赖类型参数，或者需要写操作，则只能用类型参数。</li>
+<li>通配符形式和类型参数往往配合使用，比如，上面的copy方法，定义必要的类型参数，使用通配符表达依赖，并接受更广泛的数据类型。</li>
+</ul>
+<h2 id="超类型通配符"><a href="#超类型通配符" class="headerlink" title="超类型通配符"></a>超类型通配符</h2><h3 id="灵活写入"><a href="#灵活写入" class="headerlink" title="灵活写入"></a>灵活写入</h3><p>还有一种通配符，与形式<code>&lt;? extends E&gt;</code>正好相反，它的形式为<code>&lt;? super E&gt;</code>，称之为超类型通配符，表示E的某个父类型，它有什么用呢？有了它，我们就可以更灵活的写入了。</p>
+<p>如果没有这种语法，写入会有一些限制，来看个例子，我们给DynamicArray添加一个方法：</p>
+<pre><code>public void copyTo(DynamicArray&lt;E&gt; dest){
+    for(int i=0; i&lt;size; i++){
+        dest.add(get(i));
+    }
+}
+</code></pre><p>这个方法也很简单，将当前容器中的元素添加到传入的目标容器中。我们可能希望这么使用：</p>
+<pre><code>DynamicArray&lt;Integer&gt; ints = new DynamicArray&lt;Integer&gt;();
+ints.add(100);
+ints.add(34);
+DynamicArray&lt;Number&gt; numbers = new DynamicArray&lt;Number&gt;();
+ints.copyTo(numbers);
+</code></pre><p>Integer是Number的子类，将Integer对象拷贝入Number容器，这种用法应该是合情合理的，但Java会提示编译错误，理由我们之前也说过了，期望的参数类型是<code>DynamicArray&lt;Integer&gt;</code>，<code>DynamicArray&lt;Number&gt;</code>并不适用。</p>
+<p>如之前所说，一般而言，不能将<code>DynamicArray&lt;Integer&gt;</code>看做<code>DynamicArray&lt;Number&gt;</code>，但我们这里的用法是没有问题的，Java解决这个问题的方法就是超类型通配符，可以将copyTo代码改为：</p>
+<pre><code>public void copyTo(DynamicArray&lt;? super E&gt; dest){
+    for(int i=0; i&lt;size; i++){
+        dest.add(get(i));
+    }
+}
+</code></pre><p>这样，就没有问题了。</p>
+<h3 id="灵活比较"><a href="#灵活比较" class="headerlink" title="灵活比较"></a>灵活比较</h3><p>超类型通配符另一个常用的场合是Comparable/Comparator接口。同样，我们先来看下，如果不使用，会有什么限制。以前面计算最大值的方法为例，它的方法声明是：</p>
+<pre><code>public static &lt;T extends Comparable&lt;T&gt;&gt; T max(DynamicArray&lt;T&gt; arr)
+</code></pre><p>这个声明有什么限制呢？我们举个简单的例子，有两个类Base和Child，Base的代码是：</p>
+<pre><code>class Base implements Comparable&lt;Base&gt;{
+    private int sortOrder;
+
+    public Base(int sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    @Override
+    public int compareTo(Base o) {
+        if(sortOrder &lt; o.sortOrder){
+            return -1;
+        }else if(sortOrder &gt; o.sortOrder){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+}
+</code></pre><p>Base代码很简单，实现了Comparable接口，根据实例变量sortOrder进行比较。Child代码是：</p>
+<pre><code>class Child extends Base {
+    public Child(int sortOrder) {
+        super(sortOrder);
+    }
+}
+</code></pre><p>这里，Child非常简单，只是继承了Base。注意，Child没有重新实现Comparable接口，因为Child的比较规则和Base是一样的。我们可能希望使用前面的max方法操作Child容器，如下所示：</p>
+<pre><code>DynamicArray&lt;Child&gt; childs = new DynamicArray&lt;Child&gt;();
+childs.add(new Child(20));
+childs.add(new Child(80));
+Child maxChild = max(childs);
+</code></pre><p>遗憾的是，Java会提示编译错误，类型不匹配。为什么不匹配呢？我们可能会认为，Java会将max方法的类型参数T推断为Child类型，但类型T的要求是<code>extends Comparable&lt;T&gt;</code>，而Child并没有实现<code>Comparable&lt;Child&gt;</code>，它实现的是<code>Comparable&lt;Base&gt;</code>。</p>
+<p>但我们的需求是合理的，Base类的代码已经有了关于比较所需要的全部数据，它应该可以用于比较Child对象。解决这个问题的方法，就是修改max的方法声明，使用超类型通配符，如下所示：</p>
+<pre><code>public static &lt;T extends Comparable&lt;? super T&gt;&gt; T max(DynamicArray&lt;T&gt; arr)
+</code></pre><p>就这么修改一下，就可以了，这种写法比较抽象，将T替换为Child，就是：</p>
+<pre><code>Child extends Comparable&lt;? super Child&gt;
+</code></pre><p><code>&lt;? super Child&gt;</code>可以匹配Base，所以整体就是匹配的。</p>
+<h3 id="没有-lt-T-super-E-gt"><a href="#没有-lt-T-super-E-gt" class="headerlink" title="没有&lt;T super E&gt;"></a>没有<code>&lt;T super E&gt;</code></h3><p>我们比较一下类型参数限定与超类型通配符，类型参数限定只有extends形式，没有super形式，比如说，前面的copyTo方法，它的通配符形式的声明为：</p>
+<pre><code>public void copyTo(DynamicArray&lt;? super E&gt; dest)
+</code></pre><p>如果类型参数限定支持super形式，则应该是：</p>
+<pre><code>public &lt;T super E&gt; void copyTo(DynamicArray&lt;T&gt; dest)
+</code></pre><p>事实是，Java并不支持这种语法。</p>
+<p>前面我们说过，对于有限定的通配符形式<code>&lt;? extends E&gt;</code>，可以用类型参数限定替代，但是对于类似上面的超类型通配符，则无法用类型参数替代。</p>
+<h2 id="通配符比较"><a href="#通配符比较" class="headerlink" title="通配符比较"></a>通配符比较</h2><p>两种通配符形式<code>&lt;? super E&gt;</code>和<code>&lt;? extends E&gt;</code>也比较容易混淆，我们再来比较下。</p>
+<ul>
+<li>它们的目的都是为了使方法接口更为灵活，可以接受更为广泛的类型。</li>
+<li><code>&lt;? super E&gt;</code>用于灵活写入或比较，使得对象可以写入父类型的容器，使得父类型的比较方法可以应用于子类对象。</li>
+<li><code>&lt;? extends E&gt;</code>用于灵活读取，使得方法可以读取E或E的任意子类型的容器对象。</li>
+</ul>
+<p>Java容器类的实现中，有很多这种用法，比如说，Collections中就有如下一些方法：</p>
+<pre><code>public static &lt;T extends Comparable&lt;? super T&gt;&gt; void sort(List&lt;T&gt; list)
+public static &lt;T&gt; void sort(List&lt;T&gt; list, Comparator&lt;? super T&gt; c)
+public static &lt;T&gt; void copy(List&lt;? super T&gt; dest, List&lt;? extends T&gt; src)
+public static &lt;T&gt; T max(Collection&lt;? extends T&gt; coll, Comparator&lt;? super T&gt; comp)
+</code></pre><p>通过上节和本节，我们应该可以理解这些方法声明的含义了。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本节介绍了泛型中的三种通配符形式，<code>&lt;?&gt;</code>、<code>&lt;? extends E&gt;</code>和<code>&lt;? super E&gt;</code>，并分析了与类型参数形式的区别和联系。</p>
+<p>简单总结来说：</p>
+<ul>
+<li><code>&lt;?&gt;</code>和<code>&lt;? extends E&gt;</code>用于实现更为灵活的读取，它们可以用类型参数的形式替代，但通配符形式更为简洁。</li>
+<li><code>&lt;? super E&gt;</code>用于实现更为灵活的写入和比较，不能被类型参数形式替代。</li>
+</ul>
+<p>关于泛型，还有一些细节以及限制，让我们下节来继续探讨。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/generic/" rel="tag"># generic</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/15/generic-01/" rel="next" title="java泛型基本原理和概念(01)">
+                <i class="fa fa-chevron-left"></i> java泛型基本原理和概念(01)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/15/generic-03/" rel="prev" title="java泛型一些细节和局限性(03)">
+                java泛型一些细节和局限性(03) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#更简洁的参数类型限定"><span class="nav-number">1.</span> <span class="nav-text">更简洁的参数类型限定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lt-T-extends-E-gt-与-lt-extends-E-gt"><span class="nav-number">1.1.</span> <span class="nav-text">&lt;T extends E&gt;与&lt;? extends E&gt;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解通配符"><span class="nav-number">2.</span> <span class="nav-text">理解通配符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无限定通配符"><span class="nav-number">2.1.</span> <span class="nav-text">无限定通配符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通配符的只读性"><span class="nav-number">2.2.</span> <span class="nav-text">通配符的只读性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数类型间的依赖关系"><span class="nav-number">2.3.</span> <span class="nav-text">参数类型间的依赖关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通配符与返回值"><span class="nav-number">2.4.</span> <span class="nav-text">通配符与返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通配符还是类型参数？"><span class="nav-number">2.5.</span> <span class="nav-text">通配符还是类型参数？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超类型通配符"><span class="nav-number">3.</span> <span class="nav-text">超类型通配符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#灵活写入"><span class="nav-number">3.1.</span> <span class="nav-text">灵活写入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#灵活比较"><span class="nav-number">3.2.</span> <span class="nav-text">灵活比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没有-lt-T-super-E-gt"><span class="nav-number">3.3.</span> <span class="nav-text">没有&lt;T super E&gt;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符比较"><span class="nav-number">4.</span> <span class="nav-text">通配符比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
