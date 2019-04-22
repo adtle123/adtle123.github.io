@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="spring cloud,分布式,">
 
 
 
@@ -79,19 +79,20 @@
 
 
 
-<meta name="description" content="服务雪崩的应对策略针对造成服务雪崩的不同原因, 可以使用不同的应对策略:  流量控制 改进缓存模式 服务自动扩容 服务调用者降级服务  流量控制 的具体措施包括:  网关限流 用户交互限流 关闭重试  ` 123456789101112131415161718192021222324252627282930public class Service1HystrixCommand extends Hy">
+<meta name="description" content="spring cloud的熔断器降级处理">
+<meta name="keywords" content="spring cloud,分布式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Hystrix">
 <meta property="og:url" content="http://yoursite.com/2019/04/17/Hystrix/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="服务雪崩的应对策略针对造成服务雪崩的不同原因, 可以使用不同的应对策略:  流量控制 改进缓存模式 服务自动扩容 服务调用者降级服务  流量控制 的具体措施包括:  网关限流 用户交互限流 关闭重试  ` 123456789101112131415161718192021222324252627282930public class Service1HystrixCommand extends Hy">
+<meta property="og:description" content="spring cloud的熔断器降级处理">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/Users/chenchangfeng/Library/Application%20Support/typora-user-images/image-20190417140709463.png">
-<meta property="og:updated_time" content="2019-04-17T06:07:26.000Z">
+<meta property="og:image" content="https://hexo-1254287289.cos.ap-guangzhou.myqcloud.com/hexo/image-20190417140709463.png">
+<meta property="og:updated_time" content="2019-04-22T02:53:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="服务雪崩的应对策略针对造成服务雪崩的不同原因, 可以使用不同的应对策略:  流量控制 改进缓存模式 服务自动扩容 服务调用者降级服务  流量控制 的具体措施包括:  网关限流 用户交互限流 关闭重试  ` 123456789101112131415161718192021222324252627282930public class Service1HystrixCommand extends Hy">
-<meta name="twitter:image" content="http://yoursite.com/Users/chenchangfeng/Library/Application%20Support/typora-user-images/image-20190417140709463.png">
+<meta name="twitter:title" content="Hystrix">
+<meta name="twitter:description" content="spring cloud的熔断器降级处理">
+<meta name="twitter:image" content="https://hexo-1254287289.cos.ap-guangzhou.myqcloud.com/hexo/image-20190417140709463.png">
 
 
 
@@ -127,7 +128,7 @@
 
 
 
-  <title> | Hexo</title>
+  <title>Hystrix | Hexo</title>
   
 
 
@@ -251,7 +252,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Hystrix</h1>
         
 
         <div class="post-meta">
@@ -274,6 +275,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -286,6 +309,10 @@
 
           
 
+          
+              <div class="post-description">
+                  spring cloud的熔断器降级处理
+              </div>
           
 
         </div>
@@ -314,9 +341,8 @@
 <li>用户交互限流</li>
 <li>关闭重试</li>
 </ul>
-<p>`</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Service1HystrixCommand</span> <span class="keyword">extends</span> <span class="title">HystrixCommand</span>&lt;<span class="title">Response</span>&gt; </span>&#123;`</span><br><span class="line">  `<span class="keyword">private</span> Service1 service;`</span><br><span class="line">  `<span class="keyword">private</span> Request request;`</span><br><span class="line"></span><br><span class="line">  `<span class="function"><span class="keyword">public</span> <span class="title">Service1HystrixCommand</span><span class="params">(Service1 service, Request request)</span></span>&#123;`</span><br><span class="line">    `supper(`</span><br><span class="line">      `Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(<span class="string">"ServiceGroup"</span>))`</span><br><span class="line">          `.andCommandKey(HystrixCommandKey.Factory.asKey(<span class="string">"servcie1query"</span>))`</span><br><span class="line">          `.andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey(<span class="string">"service1ThreadPool"</span>))`</span><br><span class="line">          `.andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()`</span><br><span class="line">            `.withCoreSize(<span class="number">20</span>))<span class="comment">//服务线程池数量`</span></span><br><span class="line">          `.andCommandPropertiesDefaults(HystrixCommandProperties.Setter()`</span><br><span class="line">            `.withCircuitBreakerErrorThresholdPercentage(<span class="number">60</span>)<span class="comment">//熔断器关闭到打开阈值`</span></span><br><span class="line">            `.withCircuitBreakerSleepWindowInMilliseconds(<span class="number">3000</span>)<span class="comment">//熔断器打开到关闭的时间窗长度`</span></span><br><span class="line">      `))`</span><br><span class="line">      `<span class="keyword">this</span>.service = service;`</span><br><span class="line">      `<span class="keyword">this</span>.request = request;`</span><br><span class="line">    `);`</span><br><span class="line">  `&#125;`</span><br><span class="line"></span><br><span class="line">  `<span class="meta">@Override</span>`</span><br><span class="line">  `<span class="function"><span class="keyword">protected</span> Response <span class="title">run</span><span class="params">()</span></span>&#123;`</span><br><span class="line">    `<span class="keyword">return</span> service1.call(request);`</span><br><span class="line">  `&#125;`</span><br><span class="line"></span><br><span class="line">  `<span class="meta">@Override</span>`</span><br><span class="line">  `<span class="function"><span class="keyword">protected</span> Response <span class="title">getFallback</span><span class="params">()</span></span>&#123;`</span><br><span class="line">    `<span class="keyword">return</span> Response.dummy();`</span><br><span class="line">  `&#125;`</span><br><span class="line">`&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/Users/chenchangfeng/Library/Application Support/typora-user-images/image-20190417140709463.png" alt="image-20190417140709463"></p>
+<p><img src="https://hexo-1254287289.cos.ap-guangzhou.myqcloud.com/hexo/image-20190417140709463.png" alt="image-20190417140709463"></p>
 <ol>
 <li>构建Hystrix的Command对象, 调用执行方法.</li>
 <li>Hystrix检查当前服务的熔断器开关是否开启, 若开启, 则执行降级服务getFallback方法.</li>
@@ -343,6 +369,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/spring-cloud/" rel="tag"># spring cloud</a>
+          
+            <a href="/tags/分布式/" rel="tag"># 分布式</a>
+          
+        </div>
+      
 
       
       
@@ -362,8 +396,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/20/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/21/zookeeper/" rel="prev" title="zookeeper">
+                zookeeper <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -463,7 +497,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
