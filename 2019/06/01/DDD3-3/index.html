@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="转载,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="界限上下文的控制力(下)">
+<meta name="keywords" content="转载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第3-3节 界限上下文的控制力(下)">
+<meta property="og:url" content="http://yoursite.com/2019/06/01/DDD3-3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="界限上下文的控制力(下)">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/Users/chenchangfeng/Documents/git/blog/hexo/source/_posts/DDD3-3/7c416280-a039-11e8-b8d0-2b58eb2c7eec.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/01/DDD3-3/907cfb10-a039-11e8-a6c4-6bd0a07de37c.png">
+<meta property="og:updated_time" content="2019-06-01T11:14:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第3-3节 界限上下文的控制力(下)">
+<meta name="twitter:description" content="界限上下文的控制力(下)">
+<meta name="twitter:image" content="http://yoursite.com/Users/chenchangfeng/Documents/git/blog/hexo/source/_posts/DDD3-3/7c416280-a039-11e8-b8d0-2b58eb2c7eec.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/01/DDD3-3/">
+
+
+
+
+
+  <title>第3-3节 界限上下文的控制力(下) | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/DDD3-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Adtle123">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第3-3节 界限上下文的控制力(下)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-01T19:06:10+08:00">
+                2019-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/软件设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">软件设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/软件设计模式/DDD/" itemprop="url" rel="index">
+                    <span itemprop="name">DDD</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  界限上下文的控制力(下)
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="限界上下文封装了应用边界"><a href="#限界上下文封装了应用边界" class="headerlink" title="限界上下文封装了应用边界"></a>限界上下文封装了应用边界</h3><p>架构师在划分限界上下文时，不能只满足于业务边界的确立，还得从控制技术复杂度的角度来考虑技术实现，从而做出对系统质量属性的响应与承诺，这种技术因素影响限界上下文划分的例子可谓是不胜枚举。</p>
+<h4 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h4><p>一个外卖系统的订单业务与门店、支付等领域存在业务相关性，然而考虑外卖业务的特殊性，它往往会在某个特定的时间段比如中午 11 点到 13 点会达到订单量的高峰值。系统面临高并发压力，同时还需要快速地处理每一笔外卖订单，与电商系统的订单业务不同，外卖订单具有周期短的时效性，必须在规定较短的时间内走完从下订单、支付、门店接单到配送等整个流程。如果我们将订单业务从整个系统中剥离出来，作为一个单独的限界上下文对其进行设计，就可以从物理架构上保证它的独立性，在资源分配上做到高优先级地扩展，在针对领域进行设计时，尽可能地引入异步化与并行化，来提高服务的响应能力。</p>
+<h4 id="功能重用"><a href="#功能重用" class="headerlink" title="功能重用"></a>功能重用</h4><p>对于一个面向企业雇员的国际报税系统，报税业务、旅游业务与 Visa 业务都需要账户功能的支撑。系统对用户的注册与登录有较为复杂的业务处理流程。对于一个新用户而言，系统会向客户企业的雇员发送邀请信，收到邀请信的用户只有通过了问题验证才能成为合法的注册用户，否则该用户的账户就会被锁定，称之为 Registration Locked。在用户使用期间，若违背了系统要求的验证条件，也可能会根据不同的条件锁定账户，分别称之为 Soft Locked 和 Hard Locked。只有用户提供了可以证明其合法身份的材料，其账户才能被解锁。</p>
+<p>账户管理并非系统的核心领域，但与账户相关的业务逻辑却相对复杂。从功能重用的角度考虑，我们应该将账户管理作为一个单独的限界上下文，以满足不同核心领域对这一功能的重用，避免了重复开发和重复代码。</p>
+<h4 id="实时性"><a href="#实时性" class="headerlink" title="实时性"></a>实时性</h4><p>在电商系统中，商品自然是核心，而价格（Price）则是商品概念的一个重要属性。倘若仅仅从业务的角度考虑，在进行领域建模时，价格仅仅是一个普通的领域值对象，可倘若该电商系统的商品数量达到数十亿种，每天获取商品信息的调用量在峰值达到数亿乃至数百亿次时，价格就不再是业务问题，而变成了技术问题。对价格的每一次变更都需要及时同步，真实地反馈给电商客户。</p>
+<p>为了保证这种在高并发情况下的实时性，我们就需要专门针对价格领域提供特定的技术方案，例如，通过读写分离、引入 Redis 缓存、异步数据同步等设计方法。此时，价格领域将作为一个独立的限界上下文，形成自己与众不同的架构方案，同时，为价格限界上下文提供专门的资源，并在服务设计上保证无状态，从而满足快速扩容的架构约束。</p>
+<h4 id="第三方服务集成"><a href="#第三方服务集成" class="headerlink" title="第三方服务集成"></a>第三方服务集成</h4><p>一个电商系统需要支持多种常见的支付渠道，如微信支付、支付宝、中国银联以及各大主要银行的支付。买家在购买商品以及进行退货业务时，可以选择适合自己的支付渠道完成支付。电商系统需要与这些第三方支付系统进行集成。不同的支付系统公开的 API 并不相同，安全、加密以及支付流程对支付的要求也不相同。</p>
+<p>在技术实现上，一方面我们希望为支付服务的客户端提供完全统一的支付接口，以保证调用上的便利性与一致性，另一方面我们希望能解除第三方支付服务与电商系统内部模块之间的耦合，避免引起“供应商锁定（Vender Lock）”，也能更好地应对第三方支付服务的变化。因此，我们需要将这种集成划分为一个单独的限界上下文。</p>
+<h4 id="遗留系统"><a href="#遗留系统" class="headerlink" title="遗留系统"></a>遗留系统</h4><p>当我们在运用领域驱动设计对北美医疗内容管理系统提出的新需求进行设计与开发时，这个系统的已有功能已经运行了数年时间。我们的任务是在现有系统中增加一个全新的 Find &amp; Replace 模块，其目的是为系统中的医疗内容提供针对医疗术语、药品以及药品成分的查询与替换。这个系统已经定义了自己的领域模型。这些领域模型与新增模块的领域有相似之处。但是，为了避免已有模型对新开发模块的影响，我们应该将这些已有功能视为具有技术债的遗留系统，并将该遗留系统整体视为一个限界上下文。</p>
+<p>通过这个遗留系统限界上下文的边界保护，就可以避免我们在开发过程中陷入遗留系统庞大代码库的泥沼。由于新增需求与原有系统在业务上存在交叉功能，因而可能失去了部分代码的重用机会，却能让我们甩开遗留系统的束缚，放开双手运用领域驱动设计的思想建立自己的领域模型与架构。只有在需要调用遗留系统的时候，作为调用者站在遗留系统限界上下文之外，去思考我们需要的服务，然后酌情地考虑模型对象之间的转换以及服务接口的提取。</p>
+<p>如上的诸多案例都是从技术层面而非业务层面为系统划分了应用边界，这种边界是由限界上下文完成的，通过它形成了对技术实现的隔离，避免不同的技术方案选择互相干扰导致架构的混乱。</p>
+<h3 id="案例：生成税务报告的技术风险"><a href="#案例：生成税务报告的技术风险" class="headerlink" title="案例：生成税务报告的技术风险"></a>案例：生成税务报告的技术风险</h3><p>国际税务系统需要在政府指定的周期提交税务报告，凡是满足条件的 Assignee 都需要在规定时间内生成税务报告。在生成税务报告时，需要对 Assignee 提交的 Questionnaire 数据进行合并，并基于税收策略与 Assignee 个人情况执行计算。生成税务报告的时序图如下所示：</p>
+<p><img src="/Users/chenchangfeng/Documents/git/blog/hexo/source/_posts/DDD3-3/7c416280-a039-11e8-b8d0-2b58eb2c7eec.png" alt="enter image description here"></p>
+<p>代码如下所示：</p>
+<pre><code>public class TaxReportGenerator {
+    @Service
+    private HtmlReportProvider provider;
+    @Service
+    private PdfConverter converter;
+    @Repository
+    private ReportRepository repository;
+
+    public void generateReports(String calendarReportName) {
+        Byte[]  bytes = provider.getHtmlBytes(calendarReportName);
+        Byte[] pdfBytes = converter.getPdfBytes(bytes, provider.getTitle());
+        repository.save(new TaxReport(pdfBytes));
+    }
+}
+</code></pre><p>由于每个 Assignee 的报告内容多，生成的 PDF 文件较大，使得生成税务报告的单位时间也较长。在最初用户量较少的情况下，所有税务报告的生成时间在客户预期范围内，因而并未针对报告生成功能做特别的架构设计。后来，随着系统的 Assignee 用户数增多，在提交税务报告的高峰期时，报告生成的时间越来越长。以高峰期需要提交 2000 个税务报告为例，如果每个税务报告的提交时间为 1 分钟，在只有一个 worker 的情况下，我们需要<code>2000*1/60=33</code>小时。</p>
+<p>由于单个税务报告的生成性能已经达到瓶颈，没有优化的空间，因而需要在架构层面对方案进行优化，包括如下两方面：</p>
+<ul>
+<li>引入消息队列，将整个税务报告生成过程拆分为消息队列的生产者和消费者。处于应用服务器一端的生产者仅负责收集税务报告需要的数据，而将生成报告的职责交给消息队列的消费者，从而减轻应用服务器的压力。</li>
+<li>将报告生成识别为限界上下文，定义为可以单独部署的微服务，以便于灵活地实现水平扩展。</li>
+</ul>
+<p>如下图是我们基于技术实现识别出来的 report 限界上下文。在上下文边界内，引入了消息队列。server 作为生成者，在收集了税务数据后组装消息，然后将消息入队；作为消费者的 worker 订阅该消息，一旦消息传递到达，则负责生成报告：</p>
+<p><img src="/2019/06/01/DDD3-3/907cfb10-a039-11e8-a6c4-6bd0a07de37c.png" alt="enter image description here"></p>
+<p>无论是 server 还是 worker，皆为并行执行，且在理论上可以无限制地水平扩展。倘若在性能上无法满足要求，我们可以增加 server 或 worker 节点。例如，我们希望所有税务报告能够在 4 小时内处理完毕，通过公式<code>2000*1/60/4</code>计算，预估需要 7 个 worker 并行执行即可满足目标。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/转载/" rel="tag"># 转载</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/DDD3-2/" rel="next" title="第3-2节 界限上下文的控制力(上)">
+                <i class="fa fa-chevron-left"></i> 第3-2节 界限上下文的控制力(上)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/01/DDD3-4/" rel="prev" title="第3-4节 识别界限上下文(上)">
+                第3-4节 识别界限上下文(上) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Adtle123</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#限界上下文封装了应用边界"><span class="nav-number">1.</span> <span class="nav-text">限界上下文封装了应用边界</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#高并发"><span class="nav-number">1.1.</span> <span class="nav-text">高并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#功能重用"><span class="nav-number">1.2.</span> <span class="nav-text">功能重用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实时性"><span class="nav-number">1.3.</span> <span class="nav-text">实时性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三方服务集成"><span class="nav-number">1.4.</span> <span class="nav-text">第三方服务集成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遗留系统"><span class="nav-number">1.5.</span> <span class="nav-text">遗留系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例：生成税务报告的技术风险"><span class="nav-number">2.</span> <span class="nav-text">案例：生成税务报告的技术风险</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Adtle123</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

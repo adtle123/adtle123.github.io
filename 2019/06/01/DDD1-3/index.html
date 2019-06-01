@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="转载,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="虽然说认识到软件系统的复杂本性，并不足以让我们应对其复杂，并寻找到简化系统的解决之道；然而，如果我们连导致软件复杂度的本源都茫然不知，又怎么谈得上控制复杂呢？既然我们认为导致软件系统变得复杂的成因是">
+<meta name="keywords" content="转载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第1-3节 控制软件复杂性的原则">
+<meta property="og:url" content="http://yoursite.com/2019/06/01/DDD1-3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="虽然说认识到软件系统的复杂本性，并不足以让我们应对其复杂，并寻找到简化系统的解决之道；然而，如果我们连导致软件复杂度的本源都茫然不知，又怎么谈得上控制复杂呢？既然我们认为导致软件系统变得复杂的成因是">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png">
+<meta property="og:updated_time" content="2019-06-01T10:29:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第1-3节 控制软件复杂性的原则">
+<meta name="twitter:description" content="虽然说认识到软件系统的复杂本性，并不足以让我们应对其复杂，并寻找到简化系统的解决之道；然而，如果我们连导致软件复杂度的本源都茫然不知，又怎么谈得上控制复杂呢？既然我们认为导致软件系统变得复杂的成因是">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/01/DDD1-3/">
+
+
+
+
+
+  <title>第1-3节 控制软件复杂性的原则 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/DDD1-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Adtle123">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第1-3节 控制软件复杂性的原则</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-01T18:23:20+08:00">
+                2019-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/软件设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">软件设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/软件设计模式/DDD/" itemprop="url" rel="index">
+                    <span itemprop="name">DDD</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  虽然说认识到软件系统的复杂本性，并不足以让我们应对其复杂，并寻找到简化系统的解决之道；然而，如果我们连导致软件复杂度的本源都茫然不知，又怎么谈得上控制复杂呢？既然我们认为导致软件系统变得复杂的成因是
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>虽然说认识到软件系统的复杂本性，并不足以让我们应对其复杂，并寻找到简化系统的解决之道；然而，如果我们连导致软件复杂度的本源都茫然不知，又怎么谈得上控制复杂呢？既然我们认为导致软件系统变得复杂的成因是<strong>规模</strong>、<strong>结构</strong>与<strong>变化</strong>三要素，则控制复杂度的原则就需要对它们进行各个击破。</p>
+<h3 id="分而治之、控制规模"><a href="#分而治之、控制规模" class="headerlink" title="分而治之、控制规模"></a>分而治之、控制规模</h3><p>针对规模带来的复杂度，我们应注意克制做大、做全的贪婪野心，尽力保证系统的小规模。简单说来，就是<strong>分而治之</strong>的思想，遵循<strong>小即是美</strong>的设计美学。</p>
+<p>丹尼斯·里奇（Dennis MacAlistair Ritchie）从大型项目 Multics 的失败中总结出 KISS（Keep it Simple Stupid）原则，基于此原则，他将 Unix 设计为由许多小程序组成的整体系统，每个小程序只能完成一个功能，任何复杂的操作都必须分解成一些基本步骤，由这些小程序逐一完成，再组合起来得到最终结果。从表面上看，运行一连串小程序很低效，但是事实证明，由于小程序之间可以像积木一样自由组合，所以非常灵活，能够轻易完成大量意想不到的任务。而且，计算机硬件的升级速度非常快，所以性能也不是一个问题；另一方面，当把大程序分解成单一目的的小程序，开发会变得很容易。</p>
+<p>Unix 的这种设计哲学被 Doug McIlroy、Elliot Pinson 和 Berk Tague 总结为以下两条：</p>
+<ul>
+<li>Make each program do one thing well. To do a new job, build a fresh rather than complicate old programs by adding new “features.”</li>
+<li>Expect the output of every program to become the input to another, as yet unknown, program.</li>
+</ul>
+<p>这两条原则是相辅相成的。第一条原则要求一个程序只做一件事情，符合“单一职责原则”，在应对新需求时，不会直接去修改一个复杂的旧系统，而是通过添加新特性，然后对这些特性进行组合。要满足小程序之间的自由组合，就需要满足第二条原则，即每个程序的输入和输出都是统一的，因而形成一个统一接口（Uniform Interface），以支持程序之间的自由组合（Composability）。利用统一接口，既能够解耦每个程序，又能够组合这些程序，还提高了这些小程序的重用性，这种“统一接口”，其实就是架构一致性的体现。</p>
+<h3 id="保持结构的清晰与一致"><a href="#保持结构的清晰与一致" class="headerlink" title="保持结构的清晰与一致"></a>保持结构的清晰与一致</h3><p>所有设计质量高的软件系统都有相同的特征，就是拥有<strong>清晰直观且易于理解</strong>的结构。</p>
+<p>Robert Martin 分析了这么多年诸多设计大师提出的各种系统架构风格与模式，包括 Alistair Cockburn 提出的六边形架构（Hexagonal Architecture），Jeffrey Palermo 提出的洋葱架构（Onion Architecture)，James Coplien 与 Trygve Reenskaug 提出的 DCI 架构，Ivar Jacobson 提出的 BCE 设计方法。结果，他认为这些方法的共同特征都遵循了“关注点分离”架构原则，由此提出了整洁架构的思想。</p>
+<p>整洁架构提出了一个可测试的模型，无需依赖于任何基础设施就可以对它进行测试，只需通过边界对象发送和接收对应的数据结构即可。它们都遵循<strong>稳定依赖原则</strong>，不对变化或易于变化的事物形成依赖。整洁架构模型让外部易变的部分依赖于更加稳定的领域模型，从而保证了核心的领域模型不会受到外部的影响。典型的整洁架构如下图所示：</p>
+<p><img src="/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png" alt="enter image description here"></p>
+<p>整洁架构的目的在于识别整个架构不同视角以及不同抽象层次的关注点，并为这些关注点划分不同层次的边界，从而使得整个架构变得更为清晰，以减少不必要的耦合。要做到这一点，则需要合理地进行职责分配，良好的封装与抽象，并在约束的指导下为架构建立<strong>一致</strong>的风格，这是许多良好系统的设计特征。</p>
+<h3 id="拥抱变化"><a href="#拥抱变化" class="headerlink" title="拥抱变化"></a>拥抱变化</h3><p>变化对软件系统带来的影响可以说是无解，然而我们不能因此而消极颓废，套用 Kent Beck 的话来说，我们必须“拥抱变化”。除了在开发过程中，我们应尽可能做到敏捷与快速迭代，以此来抵消变化带来的影响；在架构设计层面，我们还可以分析哪些架构质量属性与变化有关，这些质量属性包括：</p>
+<ul>
+<li>可进化性（Evolvability）</li>
+<li>可扩展性（Extensibility）</li>
+<li>可定制性（Customizability）</li>
+</ul>
+<p>要保证系统的<strong>可进化性</strong>，可以划分设计单元的边界，以确定每个设计单元应该履行的职责以及需要与其他设计单元协作的接口。这些设计单元具有不同的设计粒度，包括函数、对象、模块、组件及服务。由于每个设计单元都有自己的边界，边界内的实现细节不会影响到外部的其他设计单元，我们就可以非常容易地替换单元内部的实现细节，保证了它们的可进化性。</p>
+<p>要满足系统的<strong>可扩展性</strong>，首先要学会识别软件系统中的变化点（热点），常见的变化点包括业务规则、算法策略、外部服务、硬件支持、命令请求、协议标准、数据格式、业务流程、系统配置、界面表现等。处理这些变化点的核心就是“<strong>封装</strong>”，通过隐藏细节、引入间接等方式来隔离变化、降低耦合。一些常见的架构风格，如基于事件的集成、管道—过滤器等的引入，都可以在一定程度上提高系统可扩展性。</p>
+<p><strong>可定制性</strong>意味着可以提供特别的功能与服务。Fielding 在《架构风格与基于网络的软件架构设计》提到：“支持可定制性的风格也可能会提高简单性和可扩展性”。在 SaaS 风格的系统架构中，我们常常通过引入元数据（Metadata）来支持系统的可定制。插件模式也是满足可定制性的常见做法，它通过提供统一的插件接口，使得用户可以在系统之外按照指定接口编写插件来扩展定制化的功能。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/转载/" rel="tag"># 转载</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/DDD1-2/" rel="next" title="第1-2节 深入分析软件的复杂性">
+                <i class="fa fa-chevron-left"></i> 第1-2节 深入分析软件的复杂性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/01/DDD1-4/" rel="prev" title="第1-4节 领域驱动设计对软件复杂度的应对(上)">
+                第1-4节 领域驱动设计对软件复杂度的应对(上) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Adtle123</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分而治之、控制规模"><span class="nav-number">1.</span> <span class="nav-text">分而治之、控制规模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保持结构的清晰与一致"><span class="nav-number">2.</span> <span class="nav-text">保持结构的清晰与一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥抱变化"><span class="nav-number">3.</span> <span class="nav-text">拥抱变化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Adtle123</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
