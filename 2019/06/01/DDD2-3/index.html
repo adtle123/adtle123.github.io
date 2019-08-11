@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="运用领域场景分析提炼领域知识(上)">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://changfen_123.coding.me/2019/06/01/DDD2-3/a463fa10-7920-11e8-afa8-8db2b8bc59f2.png">
-<meta property="og:image" content="https://changfen_123.coding.me/2019/06/01/DDD2-3/e3559030-7920-11e8-afa8-8db2b8bc59f2.png">
+<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD2-3/a463fa10-7920-11e8-afa8-8db2b8bc59f2.png">
+<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD2-3/e3559030-7920-11e8-afa8-8db2b8bc59f2.png">
 <meta property="og:updated_time" content="2019-06-01T10:57:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第2-3节 运用领域场景分析提炼领域知识(上)">
 <meta name="twitter:description" content="运用领域场景分析提炼领域知识(上)">
-<meta name="twitter:image" content="https://changfen_123.coding.me/2019/06/01/DDD2-3/a463fa10-7920-11e8-afa8-8db2b8bc59f2.png">
+<meta name="twitter:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD2-3/a463fa10-7920-11e8-afa8-8db2b8bc59f2.png">
 
 
 
@@ -362,7 +362,7 @@
       
         <h3 id="领域场景分析的-6W-模型"><a href="#领域场景分析的-6W-模型" class="headerlink" title="领域场景分析的 6W 模型"></a>领域场景分析的 6W 模型</h3><p>在软件构造过程中，我们必须正确地理解领域，一种生动的方式是通过“场景”来展现领域逻辑。领域专家或业务分析师从领域中提炼出“场景”，就好像是从抽象的三维球体中，切割出具体可见的一片，然后以这一片场景为舞台，上演各种角色之间的悲欢离合。每个角色的行为皆在业务流程的指引下展开活动，并受到业务规则的约束。当我们在描述场景时，就好像在讲故事，又好似在拍电影。</p>
 <p>组成场景的要素常常被称之为 <strong>6W 模型</strong>，即描写场景的过程必须包含 <strong>W</strong>ho、<strong>W</strong>hat、<strong>W</strong>hy、<strong>W</strong>here、<strong>W</strong>hen 与 ho<strong>W</strong> 这六个要素，6W 模型如下图所示：</p>
-<p><img src="/2019/06/01/DDD2-3/a463fa10-7920-11e8-afa8-8db2b8bc59f2.png" alt></p>
+<p><img src="/blog/2019/06/01/DDD2-3/a463fa10-7920-11e8-afa8-8db2b8bc59f2.png" alt></p>
 <p>通过场景分析领域需求时，首先需要识别参与该场景的用户角色。我们可以为其建立用户画像（Persona），通过分析该用户的特征与属性来辨别该角色在整个场景中参与的活动。这意味着我们需要明确业务功能（What），思考这一功能给该角色能够带来什么样的业务价值（Why）。注意，这里所谓的“角色”是参差多态的，同一个用户在不同场景可能是完全不同的角色。例如，在电商系统中，倘若执行的是下订单功能，则角色就是买家；针对该订单发表评论，参与的角色就变成了评论者。</p>
 <p>在 6W 模型中，我将领域功能划分为三个层次，即业务价值、业务功能和业务实现，我将其称之为“职责的层次”。定义为“职责（Responsibility）”才能够更好地体现它与角色之间的关系，即“角色履行了职责”。业务价值体现了职责存在的目的，即解释了该领域需求的 Why。只有提供了该职责，这个场景对于参与角色才是有价值的。为了满足业务价值，我们可以进一步剖析为了实现该价值需要哪些支撑功能，这些业务功能对应 6W 模型中的 What。进一步，我们对功能深入分析，就可以分析获得具体的业务实现。业务实现关注于如何去实现该业务价值，因而对应于 hoW。</p>
 <p>在电商系统中，买家要购买商品，因而<strong>下订单</strong>这一职责是具有业务价值的。通过领域分析，结合职责的层次概念，我们就可以得到如下的职责分层结构：</p>
@@ -440,7 +440,7 @@
 <li>边界（Boundary）：代表了 6W 模型的 <strong>W</strong>here。</li>
 </ul>
 <p>通过用例图来表示上面的用例规格说明：</p>
-<p><img src="/2019/06/01/DDD2-3/e3559030-7920-11e8-afa8-8db2b8bc59f2.png" alt="enter image description here"></p>
+<p><img src="/blog/2019/06/01/DDD2-3/e3559030-7920-11e8-afa8-8db2b8bc59f2.png" alt="enter image description here"></p>
 <p>在这个用例图中，为什么只有 place order 用例与 buyer 参与者之间才存在使用（use）关系？我们可以看看上图中的所有用例，只有“下订单”本身对于买家而言才具有业务价值，也是买家“参与”该业务场景的主要目的。因此，我们可以将该用例视为体现这个领域场景的主用例，其他用例则是与该主用例产生协作关系的子用例。</p>
 <p>用例之间的协作关系主要分为两种：</p>
 <ul>

@@ -88,7 +88,7 @@
 <meta property="og:description" content="界限上下文的控制力(下)">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://changfen_123.coding.me/Users/chenchangfeng/Documents/git/blog/hexo/source/_posts/DDD3-3/7c416280-a039-11e8-b8d0-2b58eb2c7eec.png">
-<meta property="og:image" content="https://changfen_123.coding.me/2019/06/01/DDD3-3/907cfb10-a039-11e8-a6c4-6bd0a07de37c.png">
+<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD3-3/907cfb10-a039-11e8-a6c4-6bd0a07de37c.png">
 <meta property="og:updated_time" content="2019-06-01T11:14:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第3-3节 界限上下文的控制力(下)">
@@ -395,7 +395,7 @@
 <li>将报告生成识别为限界上下文，定义为可以单独部署的微服务，以便于灵活地实现水平扩展。</li>
 </ul>
 <p>如下图是我们基于技术实现识别出来的 report 限界上下文。在上下文边界内，引入了消息队列。server 作为生成者，在收集了税务数据后组装消息，然后将消息入队；作为消费者的 worker 订阅该消息，一旦消息传递到达，则负责生成报告：</p>
-<p><img src="/2019/06/01/DDD3-3/907cfb10-a039-11e8-a6c4-6bd0a07de37c.png" alt="enter image description here"></p>
+<p><img src="/blog/2019/06/01/DDD3-3/907cfb10-a039-11e8-a6c4-6bd0a07de37c.png" alt="enter image description here"></p>
 <p>无论是 server 还是 worker，皆为并行执行，且在理论上可以无限制地水平扩展。倘若在性能上无法满足要求，我们可以增加 server 或 worker 节点。例如，我们希望所有税务报告能够在 4 小时内处理完毕，通过公式<code>2000*1/60/4</code>计算，预估需要 7 个 worker 并行执行即可满足目标。</p>
 
       

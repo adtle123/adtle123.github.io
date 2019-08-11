@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="识别界限上下文(下)">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://changfen_123.coding.me/2019/06/01/DDD3-5/add542f0-a361-11e8-a938-3b329a942b7b.png">
-<meta property="og:image" content="https://changfen_123.coding.me/2019/06/01/DDD3-5/c9803d20-a361-11e8-a938-3b329a942b7b.png">
+<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD3-5/add542f0-a361-11e8-a938-3b329a942b7b.png">
+<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD3-5/c9803d20-a361-11e8-a938-3b329a942b7b.png">
 <meta property="og:updated_time" content="2019-06-01T11:19:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第3-5节 识别界限上下文(下)">
 <meta name="twitter:description" content="识别界限上下文(下)">
-<meta name="twitter:image" content="https://changfen_123.coding.me/2019/06/01/DDD3-5/add542f0-a361-11e8-a938-3b329a942b7b.png">
+<meta name="twitter:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD3-5/add542f0-a361-11e8-a938-3b329a942b7b.png">
 
 
 
@@ -393,7 +393,7 @@
 <li>共同的目标</li>
 <li>团队的边界</li>
 </ul>
-<p><img src="/2019/06/01/DDD3-5/add542f0-a361-11e8-a938-3b329a942b7b.png" alt></p>
+<p><img src="/blog/2019/06/01/DDD3-5/add542f0-a361-11e8-a938-3b329a942b7b.png" alt></p>
 <p>虽然 Jurgen Appelo 在提及边界时，是站在团队结构的角度来分析的；可在设计团队组织时确定工作边界的原则，恰恰与限界上下文的控制边界暗暗相合。总结书中对边界的阐释，大致包括：</p>
 <ul>
 <li><strong>团队成员应对团队的边界形成共识</strong>，这就意味着团队成员需要了解自己负责的限界上下文边界，以及该限界上下文如何与外部的资源以及其他限界上下文进行通信。</li>
@@ -412,7 +412,7 @@
 <h4 id="遗留系统"><a href="#遗留系统" class="headerlink" title="遗留系统"></a>遗留系统</h4><p>自治原则的唯一例外是遗留系统，因为领域驱动设计建议的通常做法是将整个遗留系统视为一个限界上下文。那么，什么是遗留系统？根据维基百科的定义，它是一种旧的方法、旧的技术、旧的计算机系统或应用程序，这个定义并不能解释遗留系统的真相。我认为，系统之所以成为遗留系统，关键在于<strong>知识的缺乏</strong>。文档不够全面真实，掌握系统知识的团队成员泰半离开，系统的代码可能是一个大泥团。因此，我对遗留系统的定义是“<strong>一个还在运行和使用，但已步入软件生命衰老期的缺乏足够知识的软件系统</strong>”。</p>
 <p>倘若运用领域驱动设计的系统要与这样一个遗留系统打交道，应该怎么办？窃以为，粗暴地将整个遗留系统包裹在一个限界上下文中，未免太理想化和简单化了。要点还是<strong>自治</strong>，这时候我们应该站在遗留系统的调用者来观察它，考虑如何与遗留系统集成，然后逐步对遗留系统进行抽取与迁移，形成自治的限界上下文。</p>
 <p>在这个过程中，我们可以借鉴技术栈迁移中常常运用的“抽象分支（Branch By Abstraction）”手法。该手法会站在消费者（Consumer）一方观察遗留系统，找到需要替换的单元（组件）；然后对该组件进行抽象，从而将消费者与遗留系统中的实现解耦。最后，提供一个完全新的组件实现，在保留抽象层接口不变的情况下替换掉遗留系统的旧组件，达到技术栈迁移的目的：</p>
-<p><img src="/2019/06/01/DDD3-5/c9803d20-a361-11e8-a938-3b329a942b7b.png" alt="enter image description here"></p>
+<p><img src="/blog/2019/06/01/DDD3-5/c9803d20-a361-11e8-a938-3b329a942b7b.png" alt="enter image description here"></p>
 <p>如上图所示的抽象层，本质就是后面我们要提到的“防腐层（Anticorruption Layer）”，通过引入这么一个间接层来隔离与遗留系统之间的耦合。这个防腐层往往是作为下游限界上下文的一部分存在。若有必要，也可以单独为其创建一个独立的限界上下文。</p>
 <h3 id="设计驱动力"><a href="#设计驱动力" class="headerlink" title="设计驱动力"></a>设计驱动力</h3><p>结合业务边界、工作边界和应用边界，形成一种层层推进的设计驱动力，可以让我们对限界上下文的设计变得更加准确，边界的控制变得更加合理，毕竟，限界上下文的识别对于整个系统的架构至关重要。在领域驱动的战略设计阶段，如果我们对识别出来的限界上下文的准确性还心存疑虑，那么比较实际的做法是保持限界上下文一定的粗粒度。倘若觉得功能的边界不好把握分寸，可以考虑将这些模棱两可的功能放在同一个限界上下文中。待到该限界上下文变得越来越庞大，以至于一个 2PTs 团队无法完成交付目标；又或者该限界上下文的功能各有不同的质量属性要求；要么就是因为重用或变化，使得我们能够更清楚地看到分解的必要性；此时我们再对该限界上下文进行分解，就会更加有把握。这是设计的实证主义态度。</p>
 <p>通过以上过程去识别限界上下文，仅仅是一种对领域问题域的静态划分，我们还缺少另外一个重要的关注点，即：限界上下文之间是如何协作的？倘若限界上下文识别不合理，协作就会变得更加困难，尤其当一个限界上下文对应一个微服务时，协作成本更会显著增加。反过来，当我们发现彼此协作存在问题时，说明限界上下文的划分出现了问题，这算是对识别限界上下文的一种验证方法。Eric Evans 将这种体现限界上下文协作方式的要素称之为“上下文映射（Context Map）”。</p>
