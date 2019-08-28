@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="desig1n,BeanDefintion,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,21 +79,22 @@
 
 
 
-<meta name="description" content="BeanDefintion描述了一个有属性值，构造方法参数值，和从继承体系中提供更多信息的Bean的实例。这只是一个最小的接口。它的主要功能是让BeanFactoryPostProcessor 如PropertyPlaceholderConfigurer修改一些属性值和其他 bean元数据。">
-<meta name="keywords" content="desig1n,BeanDefintion">
+<meta name="description" content="同步 ：相对IO而言，在同一时间，只能完成一个操作 异步：相对IO而言，在同一时间，同时完成多个操作 阻塞：相对数据而言，判断数据有没有准备好，如果没有准备好，停住不前，一直等待 非阻塞：相对数据而言，不管数据有没有准备好，都会给一个反馈，不至于客户端一直占用资源 万事万物相对论   解决cup空旋,NIOEventLoop run方法中判断是否有任务，然后执行select 方法，selectC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring-Base">
-<meta property="og:url" content="https://changfen_123.coding.me/2019/05/12/Spring-Base/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://changfen_123.coding.me/2019/04/13/netty1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="BeanDefintion描述了一个有属性值，构造方法参数值，和从继承体系中提供更多信息的Bean的实例。这只是一个最小的接口。它的主要功能是让BeanFactoryPostProcessor 如PropertyPlaceholderConfigurer修改一些属性值和其他 bean元数据。">
+<meta property="og:description" content="同步 ：相对IO而言，在同一时间，只能完成一个操作 异步：相对IO而言，在同一时间，同时完成多个操作 阻塞：相对数据而言，判断数据有没有准备好，如果没有准备好，停住不前，一直等待 非阻塞：相对数据而言，不管数据有没有准备好，都会给一个反馈，不至于客户端一直占用资源 万事万物相对论   解决cup空旋,NIOEventLoop run方法中判断是否有任务，然后执行select 方法，selectC">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://changfen_123.coding.me/Users/chenchangfeng/Documents/git/blog/hexo/source/_posts/Spring-Base/image-20190512154823198.png">
-<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/05/12/Spring-Base/image-20190521223409742.png">
-<meta property="og:updated_time" content="2019-05-21T14:34:54.000Z">
+<meta property="og:image" content="https://changfen_123.coding.me/Users/chenchangfeng/Library/Application%20Support/typora-user-images/image-20190330112343817.png">
+<meta property="og:image" content="https://changfen_123.coding.me/Users/chenchangfeng/Library/Application%20Support/typora-user-images/image-20190330191756240.png">
+<meta property="og:image" content="https://changfen_123.coding.me/Users/chenchangfeng/Library/Application%20Support/typora-user-images/image-20190330195610172.png">
+<meta property="og:image" content="https://changfen_123.coding.me/Users/chenchangfeng/Library/Application%20Support/typora-user-images/image-20190413162318653.png">
+<meta property="og:updated_time" content="2019-08-27T13:17:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring-Base">
-<meta name="twitter:description" content="BeanDefintion描述了一个有属性值，构造方法参数值，和从继承体系中提供更多信息的Bean的实例。这只是一个最小的接口。它的主要功能是让BeanFactoryPostProcessor 如PropertyPlaceholderConfigurer修改一些属性值和其他 bean元数据。">
-<meta name="twitter:image" content="https://changfen_123.coding.me/Users/chenchangfeng/Documents/git/blog/hexo/source/_posts/Spring-Base/image-20190512154823198.png">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="同步 ：相对IO而言，在同一时间，只能完成一个操作 异步：相对IO而言，在同一时间，同时完成多个操作 阻塞：相对数据而言，判断数据有没有准备好，如果没有准备好，停住不前，一直等待 非阻塞：相对数据而言，不管数据有没有准备好，都会给一个反馈，不至于客户端一直占用资源 万事万物相对论   解决cup空旋,NIOEventLoop run方法中判断是否有任务，然后执行select 方法，selectC">
+<meta name="twitter:image" content="https://changfen_123.coding.me/Users/chenchangfeng/Library/Application%20Support/typora-user-images/image-20190330112343817.png">
 
 
 
@@ -123,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://changfen_123.coding.me/2019/05/12/Spring-Base/">
+  <link rel="canonical" href="https://changfen_123.coding.me/2019/04/13/netty1/">
 
 
 
 
 
-  <title>Spring-Base | Hexo</title>
+  <title> | Hexo</title>
   
 
 
@@ -256,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://changfen_123.coding.me/blog/2019/05/12/Spring-Base/">
+    <link itemprop="mainEntityOfPage" href="https://changfen_123.coding.me/blog/2019/04/13/netty1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Adtle123">
@@ -273,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Spring-Base</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -285,8 +286,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-12T15:45:23+08:00">
-                2019-05-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-13T16:23:22+08:00">
+                2019-04-13
               </time>
             
 
@@ -296,28 +297,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -330,10 +309,6 @@
 
           
 
-          
-              <div class="post-description">
-                  BeanDefintion描述了一个有属性值，构造方法参数值，和从继承体系中提供更多信息的Bean的实例。这只是一个最小的接口。它的主要功能是让BeanFactoryPostProcessor 如PropertyPlaceholderConfigurer修改一些属性值和其他 bean元数据。
-              </div>
           
 
         </div>
@@ -349,53 +324,64 @@
       
 
       
-        <h3 id="1-成员变量"><a href="#1-成员变量" class="headerlink" title="1.成员变量"></a>1.成员变量</h3><p><img src="/Users/chenchangfeng/Documents/git/blog/hexo/source/_posts/Spring-Base/image-20190512154823198.png" alt="image-20190512154823198"></p>
-<h3 id="2-一些元数据"><a href="#2-一些元数据" class="headerlink" title="2.一些元数据"></a>2.一些元数据</h3><table>
-<thead>
-<tr>
-<th style="text-align:center">属性</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">class</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center">name</td>
-<td style="text-align:center">Naming Bean</td>
-</tr>
-<tr>
-<td style="text-align:center">scope</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center">constructor arguments</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center">properties</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center">autowiring mode</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center">lazy-initialization mode</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center">initialization method</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center">destruction method</td>
-</tr>
-</tbody>
-</table>
-<p><img src="/blog/2019/05/12/Spring-Base/image-20190521223409742.png" alt="image-20190521223409742"></p>
+        <p><img src="/Users/chenchangfeng/Library/Application Support/typora-user-images/image-20190330112343817.png" alt="image-20190330112343817"></p>
+<p>同步 ：相对IO而言，在同一时间，只能完成一个操作</p>
+<p>异步：相对IO而言，在同一时间，同时完成多个操作</p>
+<p>阻塞：相对数据而言，判断数据有没有准备好，如果没有准备好，停住不前，一直等待</p>
+<p>非阻塞：相对数据而言，不管数据有没有准备好，都会给一个反馈，不至于客户端一直占用资源</p>
+<p>万事万物相对论</p>
+<p><img src="/Users/chenchangfeng/Library/Application Support/typora-user-images/image-20190330191756240.png" alt="image-20190330191756240"></p>
+<p><img src="/Users/chenchangfeng/Library/Application Support/typora-user-images/image-20190330195610172.png" alt="image-20190330195610172"></p>
+<p>解决cup空旋,NIOEventLoop run方法中判断是否有任务，然后执行select 方法，selectCnt超过阈值重新创建selector</p>
+<h1 id="组件介绍"><a href="#组件介绍" class="headerlink" title="组件介绍"></a>组件介绍</h1><p>channel</p>
+<p>channelconfig</p>
+<p>NioEventloop</p>
+<p>bytebuf</p>
+<p>Pipline</p>
+<p>channelhandler</p>
+<ol>
+<li><p>创建服务端Channel</p>
+<p>bootstarp.channel()方法设置channelFactory，反射生成NioServerSocketChannel</p>
+<p>newSocket()[通过底层jdk生成socket]</p>
+<p>NioServerSocketChannelConfig()[tcp参数配置类]</p>
+<p>AbstractNioChannel </p>
+<p>​    configureBlocking(false)阻塞模式</p>
+<p>​    AbstractChannel()[创建channelid，unsafe，pipline]        </p>
+</li>
+<li><p>初始化服务端Channel</p>
+</li>
+<li><p>注册selector</p>
+</li>
+</ol>
+<p>serverBootstrap.bind()-&gt;AbstractBootStrap.doBind()-&gt;initAndRegister()-&gt;newChannel()</p>
+<h3 id="NioEventLoop"><a href="#NioEventLoop" class="headerlink" title="NioEventLoop"></a>NioEventLoop</h3><p>默认情况下，Netty服务端起多少线程？何时启动？</p>
+<p>Netty是如何解决jdk空轮训bug？</p>
+<p>Netty如何保证异步串行无锁化？</p>
+<h4 id="ThreadPerTaskExecutor"><a href="#ThreadPerTaskExecutor" class="headerlink" title="ThreadPerTaskExecutor"></a>ThreadPerTaskExecutor</h4><h1 id="select"><a href="#select" class="headerlink" title="select()"></a>select()</h1><ol>
+<li>deadline以及任务穿插逻辑处理</li>
+<li>阻塞式select</li>
+<li>解决空轮询bug</li>
+</ol>
+<h2 id="processSelectedKeys"><a href="#processSelectedKeys" class="headerlink" title="processSelectedKeys()"></a>processSelectedKeys()</h2><ol>
+<li>selectdKeySet优化</li>
+<li>processSelectedKeysOptimized()处理IO事件</li>
+</ol>
+<h3 id="runAllTasks"><a href="#runAllTasks" class="headerlink" title="runAllTasks()"></a>runAllTasks()</h3><h1 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h1><p>netty是如何判断ChannelHandler类型的？</p>
+<p>对于ChannelHandler的添加应该遵循什么样的顺序？</p>
+<p>用户手动出发事件传播，不同的触发方式有什么样的区别？</p>
+<p>netty是在那里检测有新连接接入的？</p>
+<p>新连接是怎么注册到NioEventLoop线程的？</p>
+<h3 id="ByteBuf分类"><a href="#ByteBuf分类" class="headerlink" title="ByteBuf分类"></a>ByteBuf分类</h3><ul>
+<li>pool 和unpool</li>
+<li>unsafe和非unsafe</li>
+<li>Heap和Direct</li>
+</ul>
+<h3 id="DirectArena分配内存"><a href="#DirectArena分配内存" class="headerlink" title="DirectArena分配内存"></a>DirectArena分配内存</h3><ul>
+<li>从对象池里面里面拿到PooledByteBuf进行复用</li>
+<li>从缓存上进行内存分配</li>
+<li>从内存堆里面进行内存分配</li>
+</ul>
+<p><img src="/Users/chenchangfeng/Library/Application Support/typora-user-images/image-20190413162318653.png" alt="image-20190413162318653"></p>
 
       
     </div>
@@ -411,14 +397,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/blog/tags/desig1n/" rel="tag"># desig1n</a>
-          
-            <a href="/blog/tags/BeanDefintion/" rel="tag"># BeanDefintion</a>
-          
-        </div>
-      
 
       
       
@@ -428,8 +406,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/04/27/Ebusiness/" rel="next" title="Ebusiness">
-                <i class="fa fa-chevron-left"></i> Ebusiness
+              <a href="/blog/2019/04/12/dubbo/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -438,8 +416,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/06/01/DDD1-1/" rel="prev" title="第1-1节 领域驱动设计概览">
-                第1-1节 领域驱动设计概览 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2019/04/17/Hystrix/" rel="prev" title="Hystrix">
+                Hystrix <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -572,7 +550,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-成员变量"><span class="nav-number">1.</span> <span class="nav-text">1.成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-一些元数据"><span class="nav-number">2.</span> <span class="nav-text">2.一些元数据</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#组件介绍"><span class="nav-number">1.</span> <span class="nav-text">组件介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NioEventLoop"><span class="nav-number">1.0.1.</span> <span class="nav-text">NioEventLoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadPerTaskExecutor"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">ThreadPerTaskExecutor</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#select"><span class="nav-number">2.</span> <span class="nav-text">select()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#processSelectedKeys"><span class="nav-number">2.1.</span> <span class="nav-text">processSelectedKeys()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#runAllTasks"><span class="nav-number">2.1.1.</span> <span class="nav-text">runAllTasks()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pipeline"><span class="nav-number">3.</span> <span class="nav-text">Pipeline</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ByteBuf分类"><span class="nav-number">3.0.1.</span> <span class="nav-text">ByteBuf分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DirectArena分配内存"><span class="nav-number">3.0.2.</span> <span class="nav-text">DirectArena分配内存</span></a></li></ol></li></div>
             
 
           </div>
