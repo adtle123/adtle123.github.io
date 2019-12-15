@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://adtle123.github.io/2019/11/09/Untitled 1/">
+    <link itemprop="mainEntityOfPage" href="https://adtle123.github.io/2019/12/15/hashMap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Adtle123">
@@ -268,7 +268,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/11/09/Untitled 1/" itemprop="url">Untitled</a></h1>
+                <a class="post-title-link" href="/2019/12/15/hashMap/" itemprop="url">hashMap</a></h1>
         
 
         <div class="post-meta">
@@ -280,8 +280,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-09T01:40:19+08:00">
-                2019-11-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-15T21:24:04+08:00">
+                2019-12-15
               </time>
             
 
@@ -290,6 +290,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -319,10 +341,14 @@
 
       
         
-          
-            <p>{“swagger”:”2.0”,”info”:{“description”:”后台API接口”,”version”:”1.0”,”title”:”Jeecg-Boot 后台服务API接口文档”,”contact”:{“name”:”JEECG团队”},”license”:{“name”:”The Apache License, Version 2.0”,”url”:”<a href="http://www.apache.org/licenses/LICENSE-2.0.html&quot;}},&quot;host&quot;:&quot;192.168.0.101:8080&quot;,&quot;basePath&quot;:&quot;/jeecg-boot&quot;,&quot;tags&quot;:[{&quot;name&quot;:&quot;单表DEMO&quot;,&quot;description&quot;:&quot;Jeecg" target="_blank" rel="noopener">http://www.apache.org/licenses/LICENSE-2.0.html&quot;}},&quot;host&quot;:&quot;192.168.0.101:8080&quot;,&quot;basePath&quot;:&quot;/jeecg-boot&quot;,&quot;tags&quot;:[{&quot;name&quot;:&quot;单表DEMO&quot;,&quot;description&quot;:&quot;Jeecg</a> Demo Controller”},{“name”:”定时任务接口”,”description”:”Quartz Job Controller”},{“name”:”用户登录”,”description”:”Login Controller”},{“name”:”重复校验”,”description”:”Duplicate Check Controller”}],”paths”:{“/sys/duplicate/check”:{“get”:{“tags”:[“重复校验”],”summary”:”重复校验接口”,”operationId”:”doDuplicateCheckUsingGET”,”produces”:[“<em>/</em>“],”parameters”:[{“name”:”dataId”,”in”:”query”,”description”:”数据ID”,”required”:false,”type”:”string”,”x-example”:”2000”},{“name”:”fieldName”,”in”:”query”,”description”:”字段名”,”required”:false,”type”:”string”,”x-example”:”id”},{“name”:”fieldVal”,”in”:”query”,”description”:”字段值”,”required”:false,”type”:”string”,”x-example”:”1000”},{“name”:”tableName”,”in”:”query”,”description”:”表名”,”required”:false,”type”:”string”,”x-example”:”sys_log”}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«object»”,”originalRef”:”接口返回对象«object»”}},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”},”404”:{“description”:”Not Found”}},”deprecated”:false}},”/test/jeecgDemo/delete”:{“delete”:{“tags”:[“单表DEMO”],”summary”:”通过ID删除DEMO”,”description”:”通过ID删除DEMO”,”operationId”:”deleteUsingDELETE”,”produces”:[“<em>/</em>“],”parameters”:[{“name”:”id”,”in”:”query”,”description”:”id”,”required”:true,”type”:”string”}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«object»”,”originalRef”:”接口返回对象«object»”}},”204”:{“description”:”No Content”},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”}},”deprecated”:false}},”/test/jeecgDemo/deleteBatch”:{“delete”:{“tags”:[“单表DEMO”],”summary”:”批量删除DEMO”,”description”:”批量删除DEMO”,”operationId”:”deleteBatchUsingDELETE”,”produces”:[“<em>/</em>“],”parameters”:[{“name”:”ids”,”in”:”query”,”description”:”ids”,”required”:true,”type”:”string”}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«测试DEMO对象»”,”originalRef”:”接口返回对象«测试DEMO对象»”}},”204”:{“description”:”No Content”},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”}},”deprecated”:false}},”/test/jeecgDemo/queryById”:{“get”:{“tags”:[“单表DEMO”],”summary”:”通过ID查询DEMO”,”description”:”通过ID查询DEMO”,”operationId”:”queryByIdUsingGET”,”produces”:[“<em>/</em>“],”parameters”:[{“name”:”id”,”in”:”query”,”description”:”示例id”,”required”:true,”type”:”string”,”allowEmptyValue”:false}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«测试DEMO对象»”,”originalRef”:”接口返回对象«测试DEMO对象»”}},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”},”404”:{“description”:”Not Found”}},”deprecated”:false}},”/test/jeecgDemo/add”:{“post”:{“tags”:[“单表DEMO”],”summary”:”添加DEMO”,”description”:”添加DEMO”,”operationId”:”addUsingPOST”,”consumes”:[“application/json”],”produces”:[“<em>/</em>“],”parameters”:[{“in”:”body”,”name”:”jeecgDemo”,”description”:”jeecgDemo”,”required”:true,”schema”:{“$ref”:”#/definitions/测试DEMO对象”,”originalRef”:”测试DEMO对象”}}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«测试DEMO对象»”,”originalRef”:”接口返回对象«测试DEMO对象»”}},”201”:{“description”:”Created”},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”},”404”:{“description”:”Not Found”}},”deprecated”:false}},”/test/jeecgDemo/edit”:{“put”:{“tags”:[“单表DEMO”],”summary”:”编辑DEMO”,”description”:”编辑DEMO”,”operationId”:”editUsingPUT”,”consumes”:[“application/json”],”produces”:[“<em>/</em>“],”parameters”:[{“in”:”body”,”name”:”jeecgDemo”,”description”:”jeecgDemo”,”required”:true,”schema”:{“$ref”:”#/definitions/测试DEMO对象”,”originalRef”:”测试DEMO对象”}}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«测试DEMO对象»”,”originalRef”:”接口返回对象«测试DEMO对象»”}},”201”:{“description”:”Created”},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”},”404”:{“description”:”Not Found”}},”deprecated”:false}},”/test/jeecgDemo/list”:{“get”:{“tags”:[“单表DEMO”],”summary”:”获取Demo数据列表”,”description”:”获取所有Demo数据列表”,”operationId”:”listUsingGET”,”produces”:[“<em>/</em>“],”parameters”:[{“name”:”age”,”in”:”query”,”description”:”年龄”,”required”:false,”type”:”integer”,”format”:”int32”,”x-example”:0},{“name”:”birthday”,”in”:”query”,”description”:”生日”,”required”:false,”type”:”string”,”format”:”date-time”},{“name”:”bonusMoney”,”in”:”query”,”description”:”奖金”,”required”:false,”type”:”number”,”format”:”double”,”x-example”:0.0},{“name”:”content”,”in”:”query”,”description”:”个人简介”,”required”:false,”type”:”string”},{“name”:”createBy”,”in”:”query”,”description”:”创建人”,”required”:false,”type”:”string”},{“name”:”createTime”,”in”:”query”,”description”:”创建时间”,”required”:false,”type”:”string”,”format”:”date-time”},{“name”:”email”,”in”:”query”,”description”:”邮箱”,”required”:false,”type”:”string”},{“name”:”id”,”in”:”query”,”description”:”ID”,”required”:false,”type”:”string”},{“name”:”keyWord”,”in”:”query”,”description”:”关键词”,”required”:false,”type”:”string”},{“name”:”name”,”in”:”query”,”description”:”姓名”,”required”:false,”type”:”string”},{“name”:”pageNo”,”in”:”query”,”description”:”pageNo”,”required”:false,”type”:”integer”,”default”:1,”format”:”int32”},{“name”:”pageSize”,”in”:”query”,”description”:”pageSize”,”required”:false,”type”:”integer”,”default”:10,”format”:”int32”},{“name”:”punchTime”,”in”:”query”,”description”:”打卡时间”,”required”:false,”type”:”string”,”format”:”date-time”},{“name”:”salaryMoney”,”in”:”query”,”description”:”工资”,”required”:false,”type”:”number”,”x-example”:0.0},{“name”:”sex”,”in”:”query”,”description”:”性别”,”required”:false,”type”:”string”},{“name”:”sysOrgCode”,”in”:”query”,”description”:”部门编码”,”required”:false,”type”:”string”},{“name”:”updateBy”,”in”:”query”,”description”:”更新人”,”required”:false,”type”:”string”},{“name”:”updateTime”,”in”:”query”,”description”:”更新时间”,”required”:false,”type”:”string”,”format”:”date-time”}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«IPage«测试DEMO对象»»”,”originalRef”:”接口返回对象«IPage«测试DEMO对象»»”}},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”},”404”:{“description”:”Not Found”}},”deprecated”:false}},”/sys/login”:{“post”:{“tags”:[“用户登录”],”summary”:”登录接口”,”operationId”:”loginUsingPOST”,”consumes”:[“application/json”],”produces”:[“<em>/</em>“],”parameters”:[{“in”:”body”,”name”:”sysLoginModel”,”description”:”sysLoginModel”,”required”:true,”schema”:{“$ref”:”#/definitions/登录对象”,”originalRef”:”登录对象”}}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«JSONObject»”,”originalRef”:”接口返回对象«JSONObject»”}},”201”:{“description”:”Created”},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”},”404”:{“description”:”Not Found”}},”deprecated”:false}},”/sys/quartzJob/pause”:{“get”:{“tags”:[“定时任务接口”],”summary”:”暂停定时任务”,”operationId”:”pauseJobUsingGET”,”produces”:[“<em>/</em>“],”parameters”:[{“name”:”jobClassName”,”in”:”query”,”description”:”jobClassName”,”required”:true,”type”:”string”}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«object»”,”originalRef”:”接口返回对象«object»”}},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”},”404”:{“description”:”Not Found”}},”deprecated”:false}},”/sys/quartzJob/resume”:{“get”:{“tags”:[“定时任务接口”],”summary”:”恢复定时任务”,”operationId”:”resumeJobUsingGET”,”produces”:[“<em>/</em>“],”parameters”:[{“name”:”jobClassName”,”in”:”query”,”description”:”jobClassName”,”required”:true,”type”:”string”}],”responses”:{“200”:{“description”:”OK”,”schema”:{“$ref”:”#/definitions/接口返回对象«object»”,”originalRef”:”接口返回对象«object»”}},”401”:{“description”:”Unauthorized”},”403”:{“description”:”Forbidden”},”404”:{“description”:”Not Found”}},”deprecated”:false}}},”securityDefinitions”:{“X-Access-Token”:{“type”:”apiKey”,”name”:”X-Access-Token”,”in”:”header”}},”definitions”:{“IPage«测试DEMO对象»”:{“type”:”object”,”properties”:{“current”:{“type”:”integer”,”format”:”int64”},”pages”:{“type”:”integer”,”format”:”int64”},”records”:{“type”:”array”,”items”:{“$ref”:”#/definitions/测试DEMO对象”,”originalRef”:”测试DEMO对象”}},”searchCount”:{“type”:”boolean”},”size”:{“type”:”integer”,”format”:”int64”},”total”:{“type”:”integer”,”format”:”int64”}},”title”:”IPage«测试DEMO对象»”},”JSONObject”:{“type”:”object”,”title”:”JSONObject”,”additionalProperties”:{“type”:”object”}},”接口返回对象«IPage«测试DEMO对象»»”:{“type”:”object”,”properties”:{“code”:{“type”:”integer”,”format”:”int32”,”description”:”返回代码”},”message”:{“type”:”string”,”description”:”返回处理消息”},”result”:{“description”:”返回数据对象”,”$ref”:”#/definitions/IPage«测试DEMO对象»”,”originalRef”:”IPage«测试DEMO对象»”},”success”:{“type”:”boolean”,”description”:”成功标志”},”timestamp”:{“type”:”integer”,”format”:”int64”,”description”:”时间戳”}},”title”:”接口返回对象«IPage«测试DEMO对象»»”,”description”:”接口返回对象”},”接口返回对象«JSONObject»”:{“type”:”object”,”properties”:{“code”:{“type”:”integer”,”format”:”int32”,”description”:”返回代码”},”message”:{“type”:”string”,”description”:”返回处理消息”},”result”:{“type”:”object”,”description”:”返回数据对象”,”additionalProperties”:{“type”:”object”}},”success”:{“type”:”boolean”,”description”:”成功标志”},”timestamp”:{“type”:”integer”,”format”:”int64”,”description”:”时间戳”}},”title”:”接口返回对象«JSONObject»”,”description”:”接口返回对象”},”接口返回对象«object»”:{“type”:”object”,”properties”:{“code”:{“type”:”integer”,”format”:”int32”,”description”:”返回代码”},”message”:{“type”:”string”,”description”:”返回处理消息”},”result”:{“type”:”object”,”description”:”返回数据对象”},”success”:{“type”:”boolean”,”description”:”成功标志”},”timestamp”:{“type”:”integer”,”format”:”int64”,”description”:”时间戳”}},”title”:”接口返回对象«object»”,”description”:”接口返回对象”},”接口返回对象«测试DEMO对象»”:{“type”:”object”,”properties”:{“code”:{“type”:”integer”,”format”:”int32”,”description”:”返回代码”},”message”:{“type”:”string”,”description”:”返回处理消息”},”result”:{“description”:”返回数据对象”,”$ref”:”#/definitions/测试DEMO对象”,”originalRef”:”测试DEMO对象”},”success”:{“type”:”boolean”,”description”:”成功标志”},”timestamp”:{“type”:”integer”,”format”:”int64”,”description”:”时间戳”}},”title”:”接口返回对象«测试DEMO对象»”,”description”:”接口返回对象”},”测试DEMO对象”:{“type”:”object”,”properties”:{“age”:{“type”:”integer”,”format”:”int32”,”example”:0,”description”:”年龄”},”birthday”:{“type”:”string”,”format”:”date-time”,”description”:”生日”},”bonusMoney”:{“type”:”number”,”format”:”double”,”example”:0.0,”description”:”奖金”},”content”:{“type”:”string”,”description”:”个人简介”},”createBy”:{“type”:”string”,”description”:”创建人”},”createTime”:{“type”:”string”,”format”:”date-time”,”description”:”创建时间”},”email”:{“type”:”string”,”description”:”邮箱”},”id”:{“type”:”string”,”description”:”ID”},”keyWord”:{“type”:”string”,”description”:”关键词”},”name”:{“type”:”string”,”description”:”姓名”},”punchTime”:{“type”:”string”,”format”:”date-time”,”description”:”打卡时间”},”salaryMoney”:{“type”:”number”,”example”:0.0,”description”:”工资”},”sex”:{“type”:”string”,”description”:”性别”},”sysOrgCode”:{“type”:”string”,”description”:”部门编码”},”updateBy”:{“type”:”string”,”description”:”更新人”},”updateTime”:{“type”:”string”,”format”:”date-time”,”description”:”更新时间”}},”title”:”测试DEMO对象”,”description”:”测试DEMO”},”登录对象”:{“type”:”object”,”properties”:{“captcha”:{“type”:”string”,”description”:”验证码”},”password”:{“type”:”string”,”description”:”密码”},”username”:{“type”:”string”,”description”:”账号”}},”title”:”登录对象”,”description”:”登录对象”}}}</p>
-
-          
+          java集合里面hashMap k-v 键值对
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/15/hashMap/">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1823,7 +1849,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
