@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,21 +48,21 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
 
 
 
@@ -83,24 +83,24 @@
 <meta name="keywords" content="转载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第3-6节 理解上下文映射">
-<meta property="og:url" content="https://changfen_123.coding.me/2019/06/01/DDD3-6/index.html">
+<meta property="og:url" content="https://adtle123.github.io/2019/06/01/DDD3-6/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="理解上下文映射">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD3-6/7e532f30-ab34-11e8-807c-2dcb8b265ca8.png">
-<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD3-6/0b204cd0-ab36-11e8-bd17-d5905bbd0c49.png">
+<meta property="og:image" content="https://adtle123.github.io/2019/06/01/DDD3-6/7e532f30-ab34-11e8-807c-2dcb8b265ca8.png">
+<meta property="og:image" content="https://adtle123.github.io/2019/06/01/DDD3-6/0b204cd0-ab36-11e8-bd17-d5905bbd0c49.png">
 <meta property="og:updated_time" content="2019-06-01T11:21:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第3-6节 理解上下文映射">
 <meta name="twitter:description" content="理解上下文映射">
-<meta name="twitter:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD3-6/7e532f30-ab34-11e8-807c-2dcb8b265ca8.png">
+<meta name="twitter:image" content="https://adtle123.github.io/2019/06/01/DDD3-6/7e532f30-ab34-11e8-807c-2dcb8b265ca8.png">
 
 
 
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/blog/',
+    root: '/',
     scheme: 'Muse',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://changfen_123.coding.me/2019/06/01/DDD3-6/">
+  <link rel="canonical" href="https://adtle123.github.io/2019/06/01/DDD3-6/">
 
 
 
@@ -157,7 +157,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Hexo</span>
         <span class="logo-line-after"><i></i></span>
@@ -185,7 +185,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
@@ -195,7 +195,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
@@ -205,7 +205,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
@@ -215,7 +215,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
@@ -256,12 +256,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://changfen_123.coding.me/blog/2019/06/01/DDD3-6/">
+    <link itemprop="mainEntityOfPage" href="https://adtle123.github.io/2019/06/01/DDD3-6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Adtle123">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -308,7 +308,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/软件设计模式/" itemprop="url" rel="index">
+                  <a href="/categories/软件设计模式/" itemprop="url" rel="index">
                     <span itemprop="name">软件设计模式</span>
                   </a>
                 </span>
@@ -319,7 +319,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/软件设计模式/DDD/" itemprop="url" rel="index">
+                  <a href="/categories/软件设计模式/DDD/" itemprop="url" rel="index">
                     <span itemprop="name">DDD</span>
                   </a>
                 </span>
@@ -365,9 +365,9 @@
 <p>领域驱动设计通过<strong>上下文映射（Context Map）</strong> 来讨论限界上下文之间的协作问题，上下文映射是一种设计手段，Eric Evans 总结了诸如共享内核（Shared Kernel）、防腐层（Anticorruption Layer）、开放主机服务（Open Host Service）等多种模式。由于上下文映射本质上是与限界上下文一脉相承的，因此要掌握这些协作模式，应该从限界上下文的角度进行理解，着眼点还是在于“<strong>边界</strong>”。领域驱动设计认为：上下文映射是用于将限界上下文边界变得更清晰的重要工具。所以当我们正在为一些限界上下文的边界划分而左右为难时，不妨先放一放，在定下初步的限界上下文后，通过绘制上下文映射来检验，或许会有意外收获。</p>
 <p>限界上下文的一个核心价值，就是利用边界来约束不同上下文的领域模型，以保证模型的一致性。然而，每个限界上下文都不是独立存在的，多数时候，都需要多个限界上下文通力协作，才能完成一个完整的用例场景。例如，客户之于商品、商品之于订单、订单之于支付，贯穿起来才能完成“购买商品”的核心流程。</p>
 <p>两个限界上下文之间的关系是有方向的，领域驱动设计使用两个专门的术语来表述它们：“上游（Upstream）”和“下游（Downstream）”，在上下文映射图中，以 U 代表上游，D 代表下游，理解它们之间的关系，正如理解该术语隐喻的河流，自然是上游产生的变化会影响到下游，反之则不然。故而从上游到下游的关系方向，代表了影响产生的作用力，影响作用力的方向与程序员惯常理解的依赖方向恰恰相反，上游影响了下游，意味着下游依赖于上游。</p>
-<p><img src="/blog/2019/06/01/DDD3-6/7e532f30-ab34-11e8-807c-2dcb8b265ca8.png" alt="enter image description here"></p>
+<p><img src="/2019/06/01/DDD3-6/7e532f30-ab34-11e8-807c-2dcb8b265ca8.png" alt="enter image description here"></p>
 <p>在划分限界上下文的业务边界时，我们常常从“语义相关性”与“功能相关性”两个角度去判别职责划分的合理性。在上下文映射中，我发现之所以两个业务边界的限界上下文能产生上下游协作关系，皆源于二者的功能相关性，这种功能相关存在主次之分，往往是上游限界上下文作为下游限界上下文的功能支撑，这就意味着在当前的协作关系下，下游限界上下文中的用例才是核心领域。例如，订单与支付，下订单用例才是核心功能，支付功能作为支撑的公开服务而被调用；例如，邮件与文件共享，写邮件用例才是核心功能，上传附件作为支撑的公开服务而被调用；例如，项目管理与通知，分配任务用例才是核心功能，通知功能作为支撑的公开服务而被调用。巧的是，这种主次功能的调用关系，几乎对应的就是用例图中的包含用例或扩展用例。</p>
-<p><img src="/blog/2019/06/01/DDD3-6/0b204cd0-ab36-11e8-bd17-d5905bbd0c49.png" alt="enter image description here"></p>
+<p><img src="/2019/06/01/DDD3-6/0b204cd0-ab36-11e8-bd17-d5905bbd0c49.png" alt="enter image description here"></p>
 <p>如果我们通过用例图来帮助识别限界上下文，那么，<strong>用例图中的包含用例或扩展用例或许是一个不错的判断上下文协作关系的切入点</strong>。选择从包含或扩展关系切入，既可能确定了职责分离的逻辑边界，又可以确定协作关系的方向，这就是用例对领域驱动设计的价值所在了。</p>
 <p>那么，如何将上下文映射运用到领域驱动的战略设计阶段？Eric Evans 为我们总结了常用的上下文映射模式。为了更好地理解这些模式，结合限界上下文对边界的控制力，再根据这些模式的本质，我将这些上下文映射模式分为了两大类：团队协作模式与通信集成模式。前者对应的其实是团队合作的工作边界，后者则从应用边界的角度分析了限界上下文之间应该如何进行通信才能提升设计质量。针对通信集成模式，结合领域驱动设计社区的技术发展，在原有上下文映射模式基础上，增加了发布/订阅事件模式。</p>
 
@@ -387,7 +387,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/转载/" rel="tag"># 转载</a>
+            <a href="/tags/转载/" rel="tag"># 转载</a>
           
         </div>
       
@@ -400,7 +400,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/06/01/DDD3-5/" rel="next" title="第3-5节 识别界限上下文(下)">
+              <a href="/2019/06/01/DDD3-5/" rel="next" title="第3-5节 识别界限上下文(下)">
                 <i class="fa fa-chevron-left"></i> 第3-5节 识别界限上下文(下)
               </a>
             
@@ -410,7 +410,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/06/01/DDD3-7/" rel="prev" title="第3-7节 上下文映射的团队协作模式">
+              <a href="/2019/06/01/DDD3-7/" rel="prev" title="第3-7节 上下文映射的团队协作模式">
                 第3-7节 上下文映射的团队协作模式 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -478,9 +478,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/archives/">
               
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -490,7 +490,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="/blog/categories/index.html">
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
@@ -501,8 +501,8 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -616,57 +616,57 @@
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 

@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,21 +48,21 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
 
 
 
@@ -83,23 +83,23 @@
 <meta name="keywords" content="转载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第1-3节 控制软件复杂性的原则">
-<meta property="og:url" content="https://changfen_123.coding.me/2019/06/01/DDD1-3/index.html">
+<meta property="og:url" content="https://adtle123.github.io/2019/06/01/DDD1-3/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="虽然说认识到软件系统的复杂本性，并不足以让我们应对其复杂，并寻找到简化系统的解决之道；然而，如果我们连导致软件复杂度的本源都茫然不知，又怎么谈得上控制复杂呢？既然我们认为导致软件系统变得复杂的成因是">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png">
+<meta property="og:image" content="https://adtle123.github.io/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png">
 <meta property="og:updated_time" content="2019-06-01T10:29:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第1-3节 控制软件复杂性的原则">
 <meta name="twitter:description" content="虽然说认识到软件系统的复杂本性，并不足以让我们应对其复杂，并寻找到简化系统的解决之道；然而，如果我们连导致软件复杂度的本源都茫然不知，又怎么谈得上控制复杂呢？既然我们认为导致软件系统变得复杂的成因是">
-<meta name="twitter:image" content="https://changfen_123.coding.me/blog/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png">
+<meta name="twitter:image" content="https://adtle123.github.io/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png">
 
 
 
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/blog/',
+    root: '/',
     scheme: 'Muse',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://changfen_123.coding.me/2019/06/01/DDD1-3/">
+  <link rel="canonical" href="https://adtle123.github.io/2019/06/01/DDD1-3/">
 
 
 
@@ -156,7 +156,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Hexo</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,7 +184,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
@@ -194,7 +194,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
@@ -204,7 +204,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
@@ -214,7 +214,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
@@ -255,12 +255,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://changfen_123.coding.me/blog/2019/06/01/DDD1-3/">
+    <link itemprop="mainEntityOfPage" href="https://adtle123.github.io/2019/06/01/DDD1-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Adtle123">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -307,7 +307,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/软件设计模式/" itemprop="url" rel="index">
+                  <a href="/categories/软件设计模式/" itemprop="url" rel="index">
                     <span itemprop="name">软件设计模式</span>
                   </a>
                 </span>
@@ -318,7 +318,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/软件设计模式/DDD/" itemprop="url" rel="index">
+                  <a href="/categories/软件设计模式/DDD/" itemprop="url" rel="index">
                     <span itemprop="name">DDD</span>
                   </a>
                 </span>
@@ -371,7 +371,7 @@
 <h3 id="保持结构的清晰与一致"><a href="#保持结构的清晰与一致" class="headerlink" title="保持结构的清晰与一致"></a>保持结构的清晰与一致</h3><p>所有设计质量高的软件系统都有相同的特征，就是拥有<strong>清晰直观且易于理解</strong>的结构。</p>
 <p>Robert Martin 分析了这么多年诸多设计大师提出的各种系统架构风格与模式，包括 Alistair Cockburn 提出的六边形架构（Hexagonal Architecture），Jeffrey Palermo 提出的洋葱架构（Onion Architecture)，James Coplien 与 Trygve Reenskaug 提出的 DCI 架构，Ivar Jacobson 提出的 BCE 设计方法。结果，他认为这些方法的共同特征都遵循了“关注点分离”架构原则，由此提出了整洁架构的思想。</p>
 <p>整洁架构提出了一个可测试的模型，无需依赖于任何基础设施就可以对它进行测试，只需通过边界对象发送和接收对应的数据结构即可。它们都遵循<strong>稳定依赖原则</strong>，不对变化或易于变化的事物形成依赖。整洁架构模型让外部易变的部分依赖于更加稳定的领域模型，从而保证了核心的领域模型不会受到外部的影响。典型的整洁架构如下图所示：</p>
-<p><img src="/blog/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png" alt="enter image description here"></p>
+<p><img src="/2019/06/01/DDD1-3/a2ff02f0-790c-11e8-97d2-5b3665c292ea.png" alt="enter image description here"></p>
 <p>整洁架构的目的在于识别整个架构不同视角以及不同抽象层次的关注点，并为这些关注点划分不同层次的边界，从而使得整个架构变得更为清晰，以减少不必要的耦合。要做到这一点，则需要合理地进行职责分配，良好的封装与抽象，并在约束的指导下为架构建立<strong>一致</strong>的风格，这是许多良好系统的设计特征。</p>
 <h3 id="拥抱变化"><a href="#拥抱变化" class="headerlink" title="拥抱变化"></a>拥抱变化</h3><p>变化对软件系统带来的影响可以说是无解，然而我们不能因此而消极颓废，套用 Kent Beck 的话来说，我们必须“拥抱变化”。除了在开发过程中，我们应尽可能做到敏捷与快速迭代，以此来抵消变化带来的影响；在架构设计层面，我们还可以分析哪些架构质量属性与变化有关，这些质量属性包括：</p>
 <ul>
@@ -399,7 +399,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/转载/" rel="tag"># 转载</a>
+            <a href="/tags/转载/" rel="tag"># 转载</a>
           
         </div>
       
@@ -412,7 +412,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/06/01/DDD1-2/" rel="next" title="第1-2节 深入分析软件的复杂性">
+              <a href="/2019/06/01/DDD1-2/" rel="next" title="第1-2节 深入分析软件的复杂性">
                 <i class="fa fa-chevron-left"></i> 第1-2节 深入分析软件的复杂性
               </a>
             
@@ -422,7 +422,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/06/01/DDD1-4/" rel="prev" title="第1-4节 领域驱动设计对软件复杂度的应对(上)">
+              <a href="/2019/06/01/DDD1-4/" rel="prev" title="第1-4节 领域驱动设计对软件复杂度的应对(上)">
                 第1-4节 领域驱动设计对软件复杂度的应对(上) <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -499,9 +499,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/archives/">
               
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -511,7 +511,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="/blog/categories/index.html">
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
@@ -522,8 +522,8 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -653,57 +653,57 @@
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
