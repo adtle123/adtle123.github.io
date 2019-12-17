@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="java集合里面hashMap k-v 键值对">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-12-15T13:29:23.000Z">
+<meta property="og:updated_time" content="2019-12-17T13:57:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hashMap">
 <meta name="twitter:description" content="java集合里面hashMap k-v 键值对">
@@ -347,16 +347,52 @@
 
       
         <h3 id="HashMap常见面试题："><a href="#HashMap常见面试题：" class="headerlink" title="HashMap常见面试题："></a>HashMap常见面试题：</h3><ol>
-<li>HashMap的底层数据结构？</li>
-<li>HashMap的存取原理？</li>
-<li>Java7和Java8的区别？</li>
-<li>为啥会线程不安全？</li>
-<li>有什么线程安全的类代替么?</li>
-<li>默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？</li>
-<li>HashMap的扩容方式？负载因子是多少？为什是这么多？</li>
-<li>HashMap的主要参数都有哪些？</li>
-<li>HashMap是怎么处理hash碰撞的？</li>
-<li>hash的计算规则？</li>
+<li><p>HashMap的底层数据结构？</p>
+<blockquote>
+<p>数组，链表，和一个红黑树</p>
+</blockquote>
+</li>
+<li><p>HashMap的存取原理？</p>
+<blockquote>
+<ol>
+<li><p>根据hashcode找到对应的bucket之后,如果key为null，bucket的下标为</p>
+</li>
+<li><p>如果bucket为空，直接新建个节点</p>
+</li>
+<li><p>如果bucket == key,覆盖原来的值；如果bucket的节点为树节点类型，则走红黑树</p>
+</li>
+<li><p>遍历链表，如果找到相同的key，则覆盖原来值，并返回；在链表后边插入一个新的节点</p>
+</li>
+<li><p>判断容量是否大于阈值，扩容</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>Java7和Java8的区别？</p>
+</li>
+<li><p>为啥会线程不安全？</p>
+</li>
+<li><p>有什么线程安全的类代替么?</p>
+</li>
+<li><p>默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？</p>
+</li>
+<li><p>HashMap的扩容方式？负载因子是多少？为什么是这么多？</p>
+<blockquote>
+<p>容量扩充为原来二倍，采用尾节点插入法，保存链的信息。(尾部插入，防止构建循环链表，让cpu 100%)</p>
+</blockquote>
+</li>
+<li><p>HashMap的主要参数都有哪些？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int threshold;             // 扩容阈值 </span><br><span class="line">final float loadFactor;    // 负载因子</span><br><span class="line">transient int modCount;  // 出现线程问题时，负责及时抛异常</span><br><span class="line">transient int size;     // HashMap中实际存在的Node数量</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="9">
+<li><p>HashMap是怎么处理hash碰撞的？</p>
+<blockquote>
+<p>哈希表为解决冲突，可以采用开放地址法和链地址法等来解决问题，<strong>Java中HashMap采用了链地址法</strong></p>
+</blockquote>
+</li>
+<li><p>hash的计算规则？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br></pre></td></tr></table></figure></li>
 </ol>
 
       
