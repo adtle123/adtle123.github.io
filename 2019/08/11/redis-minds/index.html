@@ -94,7 +94,7 @@
 <meta property="og:image" content="https://adtle123.github.io/2019/08/11/redis-minds/阻塞.png">
 <meta property="og:image" content="https://adtle123.github.io/2019/08/11/redis-minds/Redis内存.png">
 <meta property="og:image" content="https://adtle123.github.io/2019/08/11/redis-minds/redis内存优化.png">
-<meta property="og:updated_time" content="2019-08-11T04:10:33.000Z">
+<meta property="og:updated_time" content="2020-01-05T14:02:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis_minds">
 <meta name="twitter:description" content="redis脑图">
@@ -361,7 +361,19 @@
 <p><img src="/2019/08/11/redis-minds/阻塞.png" alt="阻塞"></p>
 <p><img src="/2019/08/11/redis-minds/Redis内存.png" alt="Redis内存"></p>
 <p><img src="/2019/08/11/redis-minds/redis内存优化.png" alt="redis内存优化"></p>
-
+<h2 id="redis-cluster注意的问题-："><a href="#redis-cluster注意的问题-：" class="headerlink" title="redis cluster注意的问题 ："></a>redis cluster注意的问题 ：</h2><ol>
+<li>‘cluster-require-full-coverage’参数的设置。该参数是redis配置文件中cluster模式的一个参数，从字面上基本就能看出它的作用：需要全部覆盖！<br>具体点是redis cluster需要16384个slot都正常的时候才能对外提供服务，换句话说，只要任何一个slot异常那么整个cluster不对外提供服务。<br>redis默认是‘yes’，即需要全覆盖！建议设置成‘no’。</li>
+<li>阻塞命令产生failover。由于一些阻塞命令（flushall, del key1 key2 …）会造成redis在‘cluster-node-timeout’时间内无法响应其他节点的ping请求，<br>从而导致其他节点都把该redis标记出了pfail状态，进而产生failover。redis作者计划使用lazy redis解决。</li>
+<li>连接建立。当redis cluster的节点数多了以后，client对每个节点建立一个tcp连接需要花比较多的时间。如果是长连接，用户只需忍受一次连接建立的过程，<br>如果是短连接，那么频繁建立连接将会极大的降低效率。但即便是短连接，只要每次请求只涉及到一个key，有些客户端可能只需要与一个节点建立连接。</li>
+<li>Jedis。Jedis是redis最流行的<a href="http://lib.csdn.net/base/17" target="_blank" rel="noopener">Java</a>客户端，支持redis cluster。<br>‘MaxRedirectionsException’异常，出现该异常说明刚刚执行的那条命令经过多次重试，没有执行成功，需要用户再次执行。<br>在cluster扩容或者slot迁移的时候比较容易出现。建议捕获该异常并采取相应重试工作。<br>Pipeline，Jedis目前不支持cluster模式的pipeline，建议采用多并发代替pipeline。</li>
+<li>Multi-key。Redis cluster对多key操作有限，要求命令中所有的key都属于一个slot，才可以被执行。客户端可以对multi-key命令进行拆分，再发给redis。<br>另外一个局限是，在slot迁移过程中，multi-key命令特别容易报错(CROSSSLOT Keys in request don’t hash to the same slot)。建议不用multi-key命令。</li>
+<li>扩容速度慢。redis官方提供了redis cluster管理脚本redis-trib.rb。使用该脚本进行扩容cluster的时候，是串行的迁移slot中的每个key，这样导致了<br>扩容的速度非常慢，百G的数据要数小时。扩容时间越长，越容易出现异常。</li>
+</ol>
+<p>方案一：传统的串行IO操作，也就说n个key，分n次串行操作来获取key，复杂度是o(n)。</p>
+<p>方案二：将Mget操作(n个key)，利用已知的hash函数算出key对应的节点，这样就可以得到一个这样的关系：Map&lt;node, somekeys&gt;，也就是每个节点对应的一些keys，这样将之前的o(n)的效率降低到o(node.size())。</p>
+<p>方案三：在方案二的基础上将串行取数据改为并行取数据，进一步提高效率。</p>
+<p>方案四：通过redis自带的hashtag功能，强制一批key分配到某台机器上，不推荐使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 集群下面Pipeline操作</span><br><span class="line"> */</span><br><span class="line">public List&lt;String&gt; clusterPiplineGet(List&lt;String&gt; keys)&#123;</span><br><span class="line">    RedisSerializer keySerializer = new StringRedisSerializer();</span><br><span class="line">    RedisSerializer&lt;String&gt; valueSerializer = new Jackson2JsonRedisSerializer&lt;&gt;(String.class);</span><br><span class="line">    Map&lt;RedisClusterNode,List&lt;String&gt;&gt; nodeKeyMap = new HashMap&lt;&gt;();</span><br><span class="line">    List&lt;String&gt; result = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    RedisClusterConnection redisClusterConnection = redisTemplate.getConnectionFactory().getClusterConnection();</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        // 通过计算每个key的槽点，并获取相应节点</span><br><span class="line">        Iterable&lt;RedisClusterNode&gt; redisClusterNodes = redisClusterConnection.clusterGetNodes();</span><br><span class="line">        for (RedisClusterNode redisClusterNode: redisClusterNodes) &#123;</span><br><span class="line">            RedisClusterNode.SlotRange slotRange = redisClusterNode.getSlotRange();</span><br><span class="line">            for(String key : keys)&#123;</span><br><span class="line">                int slot = JedisClusterCRC16.getCRC16(key);</span><br><span class="line">                if(slotRange.contains(slot))&#123;</span><br><span class="line">                    List&lt;String&gt; list = nodeKeyMap.get(redisClusterNode);</span><br><span class="line">                    if (list == null) &#123;</span><br><span class="line">                        list = new ArrayList&lt;&gt;();</span><br><span class="line">                        nodeKeyMap.putIfAbsent(redisClusterNode,list);</span><br><span class="line">                    &#125;</span><br><span class="line">                    list.add(key);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (Map.Entry&lt;RedisClusterNode,List&lt;String&gt;&gt; redisClusterNodeListEntry : nodeKeyMap.entrySet() ) &#123;</span><br><span class="line"></span><br><span class="line">            RedisClusterNode redisClusterNode = redisClusterNodeListEntry.getKey();</span><br><span class="line">            List&lt;String&gt; nodeListEntryValue = redisClusterNodeListEntry.getValue();</span><br><span class="line">            JedisPool jedisPool = ((JedisCluster) redisClusterConnection.getNativeConnection()).getClusterNodes().get(new HostAndPort(redisClusterNode.getHost(), redisClusterNode.getPort()).toString());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//            byte[][] arr = new byte[nodeListEntryValue.size()][];</span><br><span class="line">            int count = 0;</span><br><span class="line">            //获取key数据</span><br><span class="line">//            for (String nodeKey : nodeListEntryValue) &#123;</span><br><span class="line">//                arr[count++] = keySerializer.serialize(nodeKey);</span><br><span class="line">//            &#125;</span><br><span class="line">            Jedis jedis = jedisPool.getResource();</span><br><span class="line">            List&lt;Response&lt;byte[]&gt;&gt; responses = new ArrayList&lt;&gt;();</span><br><span class="line">            try &#123;</span><br><span class="line">                Pipeline pipeline = jedis.pipelined();</span><br><span class="line">                for (String nodeKey : nodeListEntryValue) &#123;</span><br><span class="line">                    responses.add(pipeline.get(keySerializer.serialize(nodeKey)));</span><br><span class="line">                &#125;</span><br><span class="line">                pipeline.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                jedis.close();</span><br><span class="line">            &#125;</span><br><span class="line">            for (Response&lt;byte[]&gt; response : responses) &#123;</span><br><span class="line">                byte[] data = response.get();</span><br><span class="line">                result.add(valueSerializer.deserialize(data));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        RedisConnectionUtils.releaseConnection(redisClusterConnection, redisTemplate.getConnectionFactory());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -457,8 +469,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -519,6 +540,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-cluster注意的问题-："><span class="nav-number">1.</span> <span class="nav-text">redis cluster注意的问题 ：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -532,7 +569,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
